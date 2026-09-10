@@ -24,7 +24,7 @@ Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuv
 
 ## Arbeitspaket 1 – Stabilität und Bestandsprüfung
 
-- [ ] `npm run build` auf dem aktuellen Linux-Stand vollständig prüfen
+- [x] `npm run build` auf dem aktuellen Linux-Stand vollständig prüfen
 - [ ] TypeScript-Typecheck prüfen und Altfehler katalogisieren
 - [ ] Login, Registrierung und Gastmodus einzeln testen
 - [ ] Partie: normaler Zug, Schlagzug, Rochade, Umwandlung, Matt, Aufgabe und Rücknahme testen
@@ -36,10 +36,12 @@ Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuv
 ## Arbeitspaket 2 – Offensichtliche Altlasten
 
 - [ ] veraltete oder ungenutzte Imports und Debug-Ausgaben entfernen
+- [ ] Login-Zurück-Navigation korrigieren (`Login.tsx` führt derzeit auf `/game`)
 - [ ] `wantsToClick`/Click-Einstellung prüfen: Einstellungen lesen derzeit ein Formularfeld `click`, obwohl dort kein entsprechendes Bedienelement sichtbar ist
 - [ ] Gastmodus und normale Benutzer auf einheitliche Initialwerte bringen
 - [ ] harte Annahmen wie `Kapitel abgeschlossen: x/15` durch Werte aus den Trainingsdaten ersetzen
 - [ ] KI-Sonderfälle wie Patt, Remis und fehlender bester Zug robust behandeln
+- [ ] Datenbankzugriffe gegen nicht gefundene Benutzer absichern
 - [ ] direkte DOM-Zugriffe im Schachbrett schrittweise durch React-State/Refs ersetzen
 
 ## Arbeitspaket 3 – Einfachheit und Barrierefreiheit
