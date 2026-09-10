@@ -87,45 +87,67 @@ const opponents = {'w': BLACKTABLE,
 const selfs =     {'b': BLACKTABLE,
                    'w': WHITETABLE};
 
+const squareToIndex = (square) => {
+    if(typeof square !== 'string' || !/^[a-h][1-8]$/.test(square)) return null;
+    return [8 - parseInt(square[1]), square.charCodeAt(0) - 'a'.charCodeAt(0)];
+}
+
+const tableValue = (tables, color, piece, position) => {
+    if(!position || !tables[color] || !tables[color][piece]) return 0;
+    const row = tables[color][piece][position[0]];
+    if(!row) return 0;
+    const value = row[position[1]];
+    return typeof value === 'number' ? value : 0;
+}
+
+const pieceWeight = (piece) => {
+    const value = weights[piece];
+    return typeof value === 'number' ? value : 0;
+}
+
 //Evaluation Algorithm to get value for every move
 const evalBoard = (move, prevSum, color) =>{
-    let from = [8 - parseInt(move.from[1]), move.from.charCodeAt(0) - 'a'.charCodeAt(0)];;
-    let to = [8 - parseInt(move.to[1]), move.to.charCodeAt(0) - 'a'.charCodeAt(0)];
+    const from = squareToIndex(move && move.from);
+    const to = squareToIndex(move && move.to);
+
+    // A malformed/legacy move object must not crash the whole application.
+    if(!move || !from || !to) return prevSum;
 
     if(prevSum < -1500){
         if(move.piece === 'k') move.piece = 'k_e';
         else if (move.captured === 'k') move.captured = 'k_e';
     }
 
-    if('captured' in move){
+    // Newer chess.js move objects may expose captured without a usable value.
+    if(move.captured){
         if(move.color === color){
-            prevSum += (weights[move.captured] + opponents[move.color][move.captured][to[0]][to[1]]);  
+            prevSum += pieceWeight(move.captured) + tableValue(opponents, move.color, move.captured, to);
         }
         else{
-            prevSum -= (weights[move.captured] + selfs[move.color][move.captured][to[0]][to[1]]);  
+            prevSum -= pieceWeight(move.captured) + tableValue(selfs, move.color, move.captured, to);
         }
     }
 
-    if(move.flags.includes('p')){
+    if(move.flags && move.flags.includes('p')){
         move.promotion = 'q';
 
         if(move.color === color){
-            prevSum -= (weights[move.piece] + selfs[move.color][move.piece][from[0]][from[1]]);
-            prevSum += (weights[move.promotion] + selfs[move.color][move.promotion][to[0]][to[1]]);
+            prevSum -= pieceWeight(move.piece) + tableValue(selfs, move.color, move.piece, from);
+            prevSum += pieceWeight(move.promotion) + tableValue(selfs, move.color, move.promotion, to);
         }
         else{
-            prevSum += (weights[move.piece] + selfs[move.color][move.piece][from[0]][from[1]]);
-            prevSum -= (weights[move.promotion] + selfs[move.color][move.promotion][to[0]][to[1]]);
+            prevSum += pieceWeight(move.piece) + tableValue(selfs, move.color, move.piece, from);
+            prevSum -= pieceWeight(move.promotion) + tableValue(selfs, move.color, move.promotion, to);
         }
     }
     else{
         if(move.color !== color){
-            prevSum += selfs[move.color][move.piece][from[0]][from[1]];
-            prevSum -= selfs[move.color][move.piece][to[0]][to[1]];
+            prevSum += tableValue(selfs, move.color, move.piece, from);
+            prevSum -= tableValue(selfs, move.color, move.piece, to);
         }
         else{
-            prevSum -= selfs[move.color][move.piece][from[0]][from[1]];
-            prevSum += selfs[move.color][move.piece][to[0]][to[1]];
+            prevSum -= tableValue(selfs, move.color, move.piece, from);
+            prevSum += tableValue(selfs, move.color, move.piece, to);
         }
     }
 
@@ -164,8 +186,8 @@ const minimax = (chess, depth, alpha, beta, isMaxPlayer, sum, color) =>{
             if(move_value < min_value){
                 min_value = move_value;
                 best_move = curr_pretty_move;
-            }     
-            if(move_value < beta) beta = move_value;       
+            }
+            if(move_value < beta) beta = move_value;
         }
 
         if(alpha >= beta) break;
