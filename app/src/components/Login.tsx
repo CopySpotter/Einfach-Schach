@@ -2,14 +2,14 @@ import SignInFace from '../components/logins/SignInFace';
 import { useState } from 'react';
 import QRSignIn from '../components/logins/QRSignIn';
 import SignIn from '../components/logins/SignIn';
-import { 
+import {
   Divider,
   Container,
   Typography,
   Box,
   Button,
   CssBaseline
- } from '@mui/material';
+} from '@mui/material';
 import GreenButton from './buttons/GenericButton';
 import BackButton from './buttons/BackButton';
 import { useRouter } from 'next/router';
@@ -20,52 +20,63 @@ const signInTypes = {
   legacy: <SignIn />
 };
 
+interface LoginMenuProps {
+  onBack?: () => void;
+}
 
-export default function LoginMenu() {
-  const [loginType, setLoginType] = useState('init'|| <Button></Button>);
+export default function LoginMenu({ onBack }: LoginMenuProps) {
+  const [loginType, setLoginType] = useState('init' || <Button></Button>);
   const router = useRouter();
-  
+
   const qr = () => {
     setLoginType(signInTypes.qr);
-  }
+  };
   const face = () => {
     setLoginType(signInTypes.face);
-  }
+  };
   const legacy = () => {
     setLoginType(signInTypes.legacy);
-  }
+  };
 
-  if (loginType === 'init'){
-    return(
-    
+  const goBack = () => {
+    if (onBack) {
+      onBack();
+      return;
+    }
+    router.push('/');
+  };
+
+  if (loginType === 'init') {
+    return (
       <Container component="main" maxWidth="sm">
-      <CssBaseline />
-      <BackButton {...{
-      onClick:() => {router.push('/game')},
-      buttonText:'< Zurück',
-      }}/>
-      <Box
-        sx={{
-          marginTop: '5rem',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}
-      >
-        <Divider />
-        
+        <CssBaseline />
+        <BackButton
+          {...{
+            onClick: goBack,
+            buttonText: '< Zurück'
+          }}
+        />
+        <Box
+          sx={{
+            marginTop: '5rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
+          <Divider />
 
-        <div>
-      <Typography variant="h4" component="h3" gutterBottom>
-        Wie möchtest du dich anmelden?
-      </Typography>
+          <div>
+            <Typography variant="h4" component="h3" gutterBottom>
+              Wie möchtest du dich anmelden?
+            </Typography>
 
-      <GreenButton {...{buttonText:"QR CODE", onClick:qr}}/>
-      <GreenButton {...{buttonText:"NAME", onClick:legacy}}/>
-        </div>
-      </Box>
-    </Container>
-    )
+            <GreenButton {...{ buttonText: 'QR CODE', onClick: qr }} />
+            <GreenButton {...{ buttonText: 'NAME', onClick: legacy }} />
+          </div>
+        </Box>
+      </Container>
+    );
   }
 
   return (

@@ -25,26 +25,26 @@ function IndexPage() {
   };
 
   const guest = () => {
-  store.setLoggedInState({
-  id: 999999,
-  name: "Gast",
-  displayName: "Gast",
-  level: 0,
-  ep:0,
-  currentGame: '',
-  dateUpdated: '0',
-  dateCreated: '0',
-  coursesFinishedTotal: 0,
-  wantsToClick: false,
-  animationSpeed: 2000,
-  chapterProgression: {},
-  blindMode: false,
-  figureSound: true,
-  boardSound: false
-});
+    store.setLoggedInState({
+      id: 999999,
+      name: 'Gast',
+      displayName: 'Gast',
+      level: 0,
+      ep: 0,
+      currentGame: '',
+      dateUpdated: '0',
+      dateCreated: '0',
+      coursesFinishedTotal: 0,
+      wantsToClick: false,
+      animationSpeed: 2000,
+      chapterProgression: {},
+      blindMode: false,
+      figureSound: true,
+      boardSound: false
+    });
   };
 
-  console.log(store.loggedInUser.name)
+  console.log(store.loggedInUser.name);
   if (store.loggedInUser.name === 'None') {
     if (landing === 'land') {
       return (
@@ -57,9 +57,15 @@ function IndexPage() {
               flexDirection: 'column',
               alignItems: 'center'
             }}
-          > <Typography variant="h3" component="h1" sx={{mb:5, fontFamily:'Anton'}} gutterBottom>
-          Einfach Schach
-        </Typography>
+          >
+            <Typography
+              variant="h3"
+              component="h1"
+              sx={{ mb: 5, fontFamily: 'Anton' }}
+              gutterBottom
+            >
+              Einfach Schach
+            </Typography>
             <Link href="/">
               <Image
                 src={logo}
@@ -69,16 +75,24 @@ function IndexPage() {
                 style={{ marginBottom: 50 }}
               />
             </Link>
-            <Divider sx={{mb:3}} />
-            <GenericButton {...{buttonText: 'Anmelden', onClick:login}}/>
-            <GenericButton {...{buttonText: 'Neues Konto', onClick:register, color: '#575757'}}/>
-            <GenericButton {...{buttonText: 'Als Gast spielen', onClick:guest}}/>
+            <Divider sx={{ mb: 3 }} />
+            <GenericButton {...{ buttonText: 'Anmelden', onClick: login }} />
+            <GenericButton
+              {...{
+                buttonText: 'Neues Konto',
+                onClick: register,
+                color: '#575757'
+              }}
+            />
+            <GenericButton
+              {...{ buttonText: 'Als Gast spielen', onClick: guest }}
+            />
           </Box>
         </Container>
       );
     }
     if (landing === 'login') {
-      return <LoginMenu/>;
+      return <LoginMenu onBack={() => setLanding('land')} />;
     }
   } else {
     return <MainMenu {...store} />;
