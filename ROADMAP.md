@@ -4,6 +4,8 @@
 
 Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuvor ungebundenen MUI-/Emotion-Abhängigkeiten sind auf eine funktionierende Kombination festgelegt. Für die lokale Benutzerdatenbank gibt es `app/src/data/users.example.json`. Der Absturz der alten KI-Bewertung bei unvollständigen Zugdaten ist defensiv abgefangen.
 
+Der Arbeitsstand auf `develop` enthält zusätzlich CI, die funktionale Bestandsaufnahme sowie den lokal getesteten Legacy-Cleanup aus PR #2. TypeScript-Check und Produktions-Build laufen dort erfolgreich in GitHub Actions.
+
 ## Bereits vorhandene Funktionen
 
 - Startseite mit Anmeldung, Registrierung und Gastmodus
@@ -25,24 +27,25 @@ Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuv
 ## Arbeitspaket 1 – Stabilität und Bestandsprüfung
 
 - [x] `npm run build` auf dem aktuellen Linux-Stand vollständig prüfen
-- [ ] TypeScript-Typecheck prüfen und Altfehler katalogisieren
-- [ ] Login, Registrierung und Gastmodus einzeln testen
+- [x] TypeScript-Typecheck prüfen
+- [ ] Login, Registrierung und Gastmodus vollständig einzeln testen
 - [ ] Partie: normaler Zug, Schlagzug, Rochade, Umwandlung, Matt, Aufgabe und Rücknahme testen
 - [ ] gespeicherte Partie nach Neustart wiederherstellen
 - [ ] Trainingskapitel und Fortschritt testen
-- [ ] Einstellungen speichern und nach Neustart prüfen
+- [ ] Einstellungen nach Neustart prüfen
 - [ ] Blindenmodus und Audios getrennt testen
 
 ## Arbeitspaket 2 – Offensichtliche Altlasten
 
 - [ ] veraltete oder ungenutzte Imports und Debug-Ausgaben entfernen
-- [ ] Login-Zurück-Navigation korrigieren (`Login.tsx` führt derzeit auf `/game`)
-- [ ] `wantsToClick`/Click-Einstellung prüfen: Einstellungen lesen derzeit ein Formularfeld `click`, obwohl dort kein entsprechendes Bedienelement sichtbar ist
+- [x] Login-Zurück-Navigation korrigieren
+- [x] `wantsToClick` vor unbeabsichtigtem Überschreiben durch das nicht mehr vorhandene Formularfeld schützen
 - [ ] Gastmodus und normale Benutzer auf einheitliche Initialwerte bringen
 - [ ] harte Annahmen wie `Kapitel abgeschlossen: x/15` durch Werte aus den Trainingsdaten ersetzen
 - [ ] KI-Sonderfälle wie Patt, Remis und fehlender bester Zug robust behandeln
-- [ ] Datenbankzugriffe gegen nicht gefundene Benutzer absichern
+- [x] Datenbankzugriffe gegen nicht gefundene Benutzer absichern
 - [ ] direkte DOM-Zugriffe im Schachbrett schrittweise durch React-State/Refs ersetzen
+- [ ] Face-Recognition-Dokumentation/Portbeispiel prüfen (`app.py` läuft standardmäßig auf 5000)
 
 ## Arbeitspaket 3 – Einfachheit und Barrierefreiheit
 
@@ -63,6 +66,10 @@ Erst nach stabiler Bestandsaufnahme.
 - [ ] Training-Datenmodell und PGN-Import dokumentieren
 - [ ] optionale Face-Recognition klar vom Kernprojekt trennen
 - [ ] automatisierte Smoke-/Regressionstests einführen
+
+## Dokumentation
+
+Die ausführliche Gesamtdokumentation liegt unter `docs/Einfach-Schach_Gesamtdokumentation.html`. Sie enthält Feature-Matrix, Benutzerabläufe, Datenflüsse, Code-Funktionen, Routen, Status und bekannte Altlasten.
 
 ## Leitlinie
 
