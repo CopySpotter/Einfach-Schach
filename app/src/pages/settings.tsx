@@ -32,11 +32,9 @@ function Settings() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const click = data.get('click');
     const speed = data.get('speed').toString();
     const newUser = {
       ...loggedInUser,
-      wantsToClick: click === 'true',
       animationSpeed: parseInt(speed),
       boardSound,
       figureSound,
