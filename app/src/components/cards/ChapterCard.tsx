@@ -1,9 +1,7 @@
 import { Box, Button, Typography, Card, CardContent, CardActionArea, Collapse, Grid, IconButton, IconButtonProps, styled } from '@mui/material';
 import LinearProgressWithLabel from '../progress/LinearProgress';
 import { useState } from 'react';
-import CheckMark from '@mui/icons-material/Check';
 import Link from 'next/link';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -39,7 +37,7 @@ export default function ChapterCard({chapter, user}) {
     let finished = <></>;
     let bgColor = 'white';
     if (completed) {
-        finished = <CheckMark sx={{ gridRow: '1', gridColumn: '7 / 8', fontSize:30, marginTop:'-0.25rem' }}/>;
+        finished = <span aria-hidden="true" style={{ gridRow: '1', gridColumn: '7 / 8', fontSize: 30, marginTop: '-0.25rem' }}>âœ“</span>;
         bgColor = 'lightgreen';
 
     }
@@ -75,22 +73,22 @@ export default function ChapterCard({chapter, user}) {
                 <CardContent>
                     <Typography paragraph>{chapter.subtext}</Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Übungen verfügbar: {chapter.courses.length}
+                        ÃƒÅ“bungen verfÃƒÂ¼gbar: {chapter.courses.length}
                         
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Übungen abgeschlossen: {progressionRaw}
+                        ÃƒÅ“bungen abgeschlossen: {progressionRaw}
                         
                     </Typography>
                    
                     <Link href={`/train/${chapter.id}`}>
                         <Button
                             variant="contained"
-                            aria-label={'Üben'}
+                            aria-label={'ÃƒÅ“ben'}
                             fullWidth
                             sx= {{float:'right', marginBottom:'0.5rem', height:60, fontSize:25}}
                             >
-                            {'Üben'}<PlayArrowIcon sx={{fontSize:30}}/>
+                            {'ÃƒÅ“ben'}<span aria-hidden="true" style={{ fontSize: 30, marginLeft: '0.25rem' }}>&#9654;</span>
 
                         </Button>
                     </Link>

@@ -55,16 +55,20 @@ function create(user: User, img: string): User {
   return user;
 }
 
-function updateGame(id: number, fen: string) {
+function updateGame(id: number, fen: string): boolean {
   const user = users.find((x) => x.id.toString() === id.toString());
+  if (!user) return false;
+
   user.currentGame = fen;
   user.dateUpdated = new Date().toISOString();
 
   saveData();
+  return true;
 }
 
-function update(id: number, params: User) {
+function update(id: number, params: User): boolean {
   const user = users.find((x) => x.id.toString() === id.toString());
+  if (!user) return false;
 
   // set date updated
   user.dateUpdated = new Date().toISOString();
@@ -72,6 +76,7 @@ function update(id: number, params: User) {
   // update and save
   Object.assign(user, params);
   saveData();
+  return true;
 }
 
 function _delete(id: number) {

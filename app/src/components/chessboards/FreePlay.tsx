@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+﻿import React, { useEffect, useRef, useState } from 'react';
 import { Chessground as ChessgroundApi } from 'chessground';
 
 import { Api } from 'chessground/api';
@@ -19,7 +19,6 @@ import {
 } from '@mui/material';
 import { defaultBoard } from '../../interfaces/constants';
 import PromotionDialog from '../modals/PromotionModal';
-import UndoIcon from '@mui/icons-material/Undo';
 import aiGetBestMove from '../../utils/ai';
 import DefeatDialog from '../modals/DefeatModal';
 import { callHiddenWindow } from '../../utils/move_displayer';
@@ -30,7 +29,6 @@ import {
 } from '../../utils/audio_player';
 import HiddenFieldForScreenReader from '../modals/AudioForScreenReaderModal';
 import { ChessPiece, MoveSquare } from '../../utils/chess_interaction_logic';
-import { HistoryEdu } from '@mui/icons-material';
 
 interface Props {
   width?: number;
@@ -169,14 +167,14 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
 
   const TYPES = {
     p: 'Bauer',
-    b: 'Läufer',
+    b: 'LÃ¤ufer',
     r: 'Turm',
     n: 'Springer',
-    q: 'Königin',
-    k: 'König'
+    q: 'KÃ¶nigin',
+    k: 'KÃ¶nig'
   };
   const COLOR = {
-    w: 'Weiß',
+    w: 'WeiÃŸ',
     b: 'Schwarz'
   };
 
@@ -478,7 +476,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         >
           <p id="history" style={{ textAlign: 'left', fontWeight: 'bold' }}></p>
         </div>
-        <HistoryEdu fontSize="large"></HistoryEdu>
+        <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>☰</span>
       </Button>
     </>
   );
@@ -493,7 +491,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         open={promo}
         setOpen={setPromo}
         text={
-          'Dein Bauer hat das Ende des Spielfeldes erreicht! Du kannst jetzt Auswählen, durch welche Figur Du ihn ersetzen möchtest. Tippe die jeweilige Figur an und drücke anschließend auf “Bestätigen”.'
+          'Dein Bauer hat das Ende des Spielfeldes erreicht! Du kannst jetzt AuswÃ¤hlen, durch welche Figur Du ihn ersetzen mÃ¶chtest. Tippe die jeweilige Figur an und drÃ¼cke anschlieÃŸend auf â€œBestÃ¤tigenâ€.'
         }
         setAuswahl={setAuswahl}
       />
@@ -505,10 +503,10 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       <Fab
         color="primary"
         onClick={rollBack}
-        aria-label="zug zurück setzen"
+        aria-label="zug zurÃ¼ck setzen"
         sx={{ float: 'right', marginBottom: '3rem', marginTop: '-4rem' }}
       >
-        <UndoIcon fontSize="large"></UndoIcon>
+        <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>↶</span>
       </Fab>
 
       <div style={{ height: width, width: width, marginBottom: '-100%' }}>
@@ -634,3 +632,4 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
 }
 
 export default ChessgroundFree;
+

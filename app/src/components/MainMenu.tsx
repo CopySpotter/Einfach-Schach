@@ -1,7 +1,6 @@
 import { UserState } from '../interfaces/user';
 import Link from 'next/link';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { Fab, Box, Container, Typography, Button, CssBaseline } from '@mui/material';
+import { Fab, Box, Container, Typography, CssBaseline } from '@mui/material';
 import { useRouter } from 'next/router';
 import GreenButton from './buttons/GenericButton';
 import BackButton from './buttons/BackButton';
@@ -40,7 +39,7 @@ export default function MainMenu(store: UserState) {
       if (user.chapterProgression[chapter].completed){
         chapterFinished += 1;
       }
-    };
+    }
   }
   
   return (
@@ -56,7 +55,7 @@ export default function MainMenu(store: UserState) {
           aria-label="settings"
           sx={{ float: 'right', marginTop: '1rem', marginRight: '1rem' }}
         >
-          <SettingsIcon fontSize="large"></SettingsIcon>
+          <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>⚙</span>
         </Fab>
       </Link>
       <Container component="main" maxWidth="sm">
