@@ -5,7 +5,9 @@ import { useStore } from '../utils/store';
 import { useRouter } from 'next/router';
 import BackButton from '../components/buttons/BackButton';
 import { fetchWrapper } from '../utils/fetch-wrapper';
-import ChessgroundFree from '../components/chessboards/FreePlay';
+import dynamic from 'next/dynamic';
+
+const ChessgroundFree = dynamic(() => import('../components/chessboards/FreePlay'), { ssr: false });
 import { defaultBoard } from '../interfaces/constants';
 import ConfirmationDialog from '../components/modals/ConfirmationModal';
 
@@ -42,7 +44,7 @@ function FreePlay() {
     <>
       <BackButton {...{
       onClick:() => router.back(),
-      buttonText:'< Zurück'
+      buttonText:'< Zur\u00fcck'
       }}/>
       <Button
         variant="contained"
@@ -77,7 +79,7 @@ function FreePlay() {
       <ConfirmationDialog
         open={cancel}
         setOpen={setCancel}
-        text={'Bist Du sicher, dass Du die Partie abbrechen möchtest?'}
+        text={'Bist Du sicher, dass Du die Partie abbrechen mÃ¶chtest?'}
         title={'Abbrechen der Partie'}
         confirmFcn={cancelGame}
       />
@@ -86,3 +88,4 @@ function FreePlay() {
 }
 
 export default FreePlay;
+
