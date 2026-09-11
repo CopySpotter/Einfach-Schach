@@ -11,7 +11,6 @@ import { useState } from 'react';
 import GreenButton from '../../components/buttons/GenericButton';
 import { getColorForChapterChooser, paginate } from '../../utils/helper';
 import ChangePage from '../../components/buttons/ChangePageButton';
-import { AppsOutageSharp } from '@mui/icons-material';
 import logo from '../../../public/chaptPlaceholder.png';
 import Image from 'next/image';
 import ProgressButton from '../../components/buttons/ProgressButton';

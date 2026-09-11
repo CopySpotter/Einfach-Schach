@@ -23,8 +23,6 @@ import {
   Typography
 } from '@mui/material';
 
-import CheckIcon from '@mui/icons-material/Check';
-
 import { styled } from '@mui/material/styles';
 
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
@@ -81,11 +79,15 @@ const chooseTick = (
       left: '19px',
       top: '11px',
       borderRadius: 100,
-      background: '#FAF4E7'
+      background: '#FAF4E7',
+      color: 'black',
+      fontSize: '26px',
+      lineHeight: '35px',
+      textAlign: 'center'
     }}
+    aria-hidden="true"
   >
-    {' '}
-    <CheckIcon sx={{ color: 'black', mt: 0.7 }} />
+    ✓
   </div>
 );
 
