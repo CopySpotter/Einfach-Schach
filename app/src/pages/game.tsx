@@ -79,7 +79,7 @@ function FreePlay() {
       <ConfirmationDialog
         open={cancel}
         setOpen={setCancel}
-        text={'Bist Du sicher, dass Du die Partie abbrechen mÃ¶chtest?'}
+        text={'Bist Du sicher, dass Du die Partie abbrechen möchtest?'}
         title={'Abbrechen der Partie'}
         confirmFcn={cancelGame}
       />

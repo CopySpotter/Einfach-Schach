@@ -12,7 +12,8 @@
     "build": "next build",
     "start": "next start",
     "type-check": "tsc",
-    "face": "cd ../facerecognition && docker image build -t face . && docker run -p 127.0.0.1:5000:5000 -d face"
+    "face": "cd ../facerecognition && docker image build -t face . && docker run -p 127.0.0.1:5000:5000 -d face",
+    "check:mojibake": "node scripts/check-mojibake.js"
   },
   "dependencies": {
     "@emotion/cache": "11.10.5",
