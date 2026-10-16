@@ -37,7 +37,7 @@ export default function ChapterCard({chapter, user}) {
     let finished = <></>;
     let bgColor = 'white';
     if (completed) {
-        finished = <span aria-hidden="true" style={{ gridRow: '1', gridColumn: '7 / 8', fontSize: 30, marginTop: '-0.25rem' }}>âœ“</span>;
+        finished = <span aria-hidden="true" style={{ gridRow: '1', gridColumn: '7 / 8', fontSize: 30, marginTop: '-0.25rem' }}>&#10003;</span>;
         bgColor = 'lightgreen';
 
     }
@@ -73,22 +73,22 @@ export default function ChapterCard({chapter, user}) {
                 <CardContent>
                     <Typography paragraph>{chapter.subtext}</Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        ÃƒÅ“bungen verfÃƒÂ¼gbar: {chapter.courses.length}
+                        Übungen verfügbar: {chapter.courses.length}
                         
                     </Typography>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        ÃƒÅ“bungen abgeschlossen: {progressionRaw}
+                        Übungen abgeschlossen: {progressionRaw}
                         
                     </Typography>
                    
                     <Link href={`/train/${chapter.id}`}>
                         <Button
                             variant="contained"
-                            aria-label={'ÃƒÅ“ben'}
+                            aria-label={'Üben'}
                             fullWidth
                             sx= {{float:'right', marginBottom:'0.5rem', height:60, fontSize:25}}
                             >
-                            {'ÃƒÅ“ben'}<span aria-hidden="true" style={{ fontSize: 30, marginLeft: '0.25rem' }}>&#9654;</span>
+                            {'Üben'}<span aria-hidden="true" style={{ fontSize: 30, marginLeft: '0.25rem' }}>&#9654;</span>
 
                         </Button>
                     </Link>
