@@ -559,41 +559,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       >
         <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>↶</span>
       </Fab>
-      <Button
-        size="small"
-        variant="text"
-        onClick={downloadPgn}
-        disabled={chess.history().length === 0}
-        aria-label="Partie als PGN speichern"
-        sx={{
-          float: 'right',
-          marginTop: '0.75rem',
-          marginRight: '-5.5rem',
-          minWidth: 'auto',
-          padding: '0.4rem 0.7rem',
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 1.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.88)',
-          color: 'text.secondary',
-          fontSize: '0.75rem',
-          fontWeight: 400,
-          lineHeight: 1.2,
-          textTransform: 'none',
-          '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 1)',
-            borderColor: 'text.secondary'
-          },
-          '@media (max-width: 600px)': {
-            marginRight: '0.25rem',
-            marginTop: '0.5rem'
-          }
-        }}
-      >
-        PGN speichern
-      </Button>
-
-      <div style={{ height: width, width: width, marginBottom: '-100%' }}>
+      <div style={{ height: width, width: width, marginBottom: 0 }}>
         <div
           ref={ref}
           style={{ height: '100%', width: '100%', display: 'table' }}
@@ -710,6 +676,42 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
               ))}
         </div>
         {user.blindMode ? OptionalButtons : <></>}
+      </div>
+      <div
+        style={{
+          width: width,
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginTop: '0.9rem',
+          paddingRight: '0.25rem'
+        }}
+      >
+        <Button
+          size="small"
+          variant="text"
+          onClick={downloadPgn}
+          disabled={chess.history().length === 0}
+          aria-label="Partie als PGN speichern"
+          sx={{
+            minWidth: 'auto',
+            padding: '0.4rem 0.7rem',
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 1.5,
+            backgroundColor: 'rgba(255, 255, 255, 0.88)',
+            color: 'text.secondary',
+            fontSize: '0.75rem',
+            fontWeight: 400,
+            lineHeight: 1.2,
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 1)',
+              borderColor: 'text.secondary'
+            }
+          }}
+        >
+          PGN speichern
+        </Button>
       </div>
     </>
   );
