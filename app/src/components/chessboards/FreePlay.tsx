@@ -535,6 +535,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         open={win}
         setOpen={setWin}
         text={'Du hast den Gegner ins Matt gesetzt!'}
+        onDownload={downloadPgn}
       />
       <PromotionDialog
         open={promo}
@@ -548,6 +549,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         open={lose}
         setOpen={setLose}
         text={'Du bist vom Gegner ins Matt gestetzt worden!'}
+        onDownload={downloadPgn}
       />
       <Fab
         color="primary"
