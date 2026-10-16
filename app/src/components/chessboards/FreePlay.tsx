@@ -560,11 +560,35 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>↶</span>
       </Fab>
       <Button
-        variant="outlined"
+        size="small"
+        variant="text"
         onClick={downloadPgn}
         disabled={chess.history().length === 0}
         aria-label="Partie als PGN speichern"
-        sx={{ float: 'right', marginTop: '1rem', marginRight: '0.5rem' }}
+        sx={{
+          float: 'right',
+          marginTop: '0.75rem',
+          marginRight: '-5.5rem',
+          minWidth: 'auto',
+          padding: '0.4rem 0.7rem',
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 1.5,
+          backgroundColor: 'rgba(255, 255, 255, 0.88)',
+          color: 'text.secondary',
+          fontSize: '0.75rem',
+          fontWeight: 400,
+          lineHeight: 1.2,
+          textTransform: 'none',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            borderColor: 'text.secondary'
+          },
+          '@media (max-width: 600px)': {
+            marginRight: '0.25rem',
+            marginTop: '0.5rem'
+          }
+        }}
       >
         PGN speichern
       </Button>
