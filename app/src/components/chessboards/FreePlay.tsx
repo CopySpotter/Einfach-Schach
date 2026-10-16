@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Chessground as ChessgroundApi } from 'chessground';
 
 import { Api } from 'chessground/api';
@@ -167,14 +167,14 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
 
   const TYPES = {
     p: 'Bauer',
-    b: 'LÃ¤ufer',
+    b: 'Läufer',
     r: 'Turm',
     n: 'Springer',
-    q: 'KÃ¶nigin',
-    k: 'KÃ¶nig'
+    q: 'Königin',
+    k: 'König'
   };
   const COLOR = {
-    w: 'WeiÃŸ',
+    w: 'Weiß',
     b: 'Schwarz'
   };
 
@@ -491,7 +491,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
         open={promo}
         setOpen={setPromo}
         text={
-          'Dein Bauer hat das Ende des Spielfeldes erreicht! Du kannst jetzt AuswÃ¤hlen, durch welche Figur Du ihn ersetzen mÃ¶chtest. Tippe die jeweilige Figur an und drÃ¼cke anschlieÃŸend auf â€œBestÃ¤tigenâ€.'
+          'Dein Bauer hat das Ende des Spielfeldes erreicht! Du kannst jetzt auswählen, durch welche Figur Du ihn ersetzen möchtest. Tippe die jeweilige Figur an und drücke anschließend auf „Bestätigen“.'
         }
         setAuswahl={setAuswahl}
       />
@@ -503,7 +503,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       <Fab
         color="primary"
         onClick={rollBack}
-        aria-label="zug zurÃ¼ck setzen"
+        aria-label="Zug zurücksetzen"
         sx={{ float: 'right', marginBottom: '3rem', marginTop: '-4rem' }}
       >
         <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>↶</span>
