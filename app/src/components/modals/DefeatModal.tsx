@@ -7,7 +7,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useRouter } from 'next/router';
 
-export default function DefeatDialog({ open, setOpen, text }) {
+export default function DefeatDialog({ open, setOpen, text, onDownload }) {
     const router = useRouter();
     const handleClose = () => {
       setOpen(false);
@@ -28,6 +28,9 @@ export default function DefeatDialog({ open, setOpen, text }) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
+            <Button onClick={onDownload} aria-label="Partie als PGN speichern">
+              PGN speichern
+            </Button>
             <Button onClick={handleClose} autoFocus>
               OK
             </Button>
