@@ -3,7 +3,9 @@
 ## Zweck
 
 In einer freien Partie kann die laufende Zugfolge mit **„PGN speichern“** als
-Datei heruntergeladen werden. PGN (*Portable Game Notation*) ist das
+Datei heruntergeladen werden. Während der Partie steht der Knopf neben dem
+Zurücknehmen-Knopf; nach Schachmatt steht er im Gewinn- oder Verlustfenster,
+bevor die Partie geschlossen wird. PGN (*Portable Game Notation*) ist das
 Standardformat für Schachpartien. Die Datei kann zum Beispiel in Lichess,
 Chess.com oder ChessBase geöffnet werden.
 
