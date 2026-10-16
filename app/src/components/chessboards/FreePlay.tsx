@@ -220,6 +220,55 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
     document.getElementById('history').innerHTML = text;
   };
 
+  const downloadPgn = () => {
+    if (chess.history().length === 0) return;
+
+    const now = new Date();
+    const pad = (number: number) => number.toString().padStart(2, '0');
+    const gameDate = `${now.getFullYear()}.${pad(now.getMonth() + 1)}.${pad(
+      now.getDate()
+    )}`;
+    const fileDate = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(
+      now.getDate()
+    )}-${pad(now.getHours())}${pad(now.getMinutes())}`;
+    const playerName =
+      user.id === 999999 ? 'Gast' : user.displayName || user.name;
+    const result = chess.isCheckmate()
+      ? chess.turn() === 'b'
+        ? '1-0'
+        : '0-1'
+      : '*';
+
+    chess.header(
+      'Event',
+      'Einfach-Schach',
+      'Site',
+      'Lokale Partie',
+      'Date',
+      gameDate,
+      'Round',
+      '-',
+      'White',
+      playerName,
+      'Black',
+      'Einfach-Schach',
+      'Result',
+      result
+    );
+
+    const file = new Blob([chess.pgn()], {
+      type: 'application/x-chess-pgn;charset=utf-8'
+    });
+    const fileUrl = URL.createObjectURL(file);
+    const link = document.createElement('a');
+    link.href = fileUrl;
+    link.download = `einfach-schach-${fileDate}.pgn`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(fileUrl);
+  };
+
   const userReset = () => {
     if (user.id != 999999) {
       fetchWrapper.post('api/game/set_game', {
@@ -508,6 +557,15 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       >
         <span aria-hidden="true" style={{ fontSize: '2rem', lineHeight: 1 }}>↶</span>
       </Fab>
+      <Button
+        variant="outlined"
+        onClick={downloadPgn}
+        disabled={chess.history().length === 0}
+        aria-label="Partie als PGN speichern"
+        sx={{ float: 'right', marginTop: '1rem', marginRight: '0.5rem' }}
+      >
+        PGN speichern
+      </Button>
 
       <div style={{ height: width, width: width, marginBottom: '-100%' }}>
         <div
