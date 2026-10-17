@@ -41,6 +41,8 @@ Freigabe- und Grenzdokumentation steht in
 - [ ] Login, Registrierung und Gastmodus vollständig einzeln testen
 - [ ] Partie: normaler Zug, Schlagzug, Rochade, Umwandlung, Matt, Aufgabe und Rücknahme testen
 - [ ] gespeicherte Partie nach Neustart wiederherstellen
+- [ ] Spielerfarbe und vollständige Zugfolge speichern, damit eine als Schwarz
+  gestartete Partie nach F5/Browserneustart korrekt fortgesetzt werden kann
 - [ ] Trainingskapitel und Fortschritt testen
 - [ ] Einstellungen nach Neustart prüfen
 - [ ] Blindenmodus und Audios getrennt testen
