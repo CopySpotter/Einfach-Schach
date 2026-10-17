@@ -2,6 +2,12 @@
 
 Einfach-Schach ist eine Schachanwendung mit Fokus auf einfache Bedienung und gute Zugänglichkeit. Die Anwendung basiert auf Next.js 12, React 17, chess.js und Chessground.
 
+> **Vorabversion v0.1.1-rc.1:** Der Branch `feature/pgn-export` enthält den
+> getesteten Entwicklungsstand mit PGN-Download, drehbarem Brett und der
+> Möglichkeit, nach einem Klick auf „Zieh“ Schwarz gegen die mit Weiß
+> eröffnende Engine zu spielen. Details und bekannte Grenzen:
+> [`docs/RELEASE-v0.1.1-rc.1.md`](docs/RELEASE-v0.1.1-rc.1.md).
+
 ## Voraussetzungen
 
 Empfohlen und getestet ist **Node.js 18**. Zusätzlich wird **Git** benötigt.
