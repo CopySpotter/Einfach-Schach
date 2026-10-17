@@ -2,6 +2,9 @@ import { createTheme, colors } from '@mui/material';
 
 // Create a theme instance.
 const theme = createTheme({
+  typography: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif'
+  },
   palette: {
     primary: {
       main: '#287233'
