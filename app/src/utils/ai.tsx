@@ -196,8 +196,8 @@ const minimax = (chess, depth, alpha, beta, isMaxPlayer, sum, color) =>{
     else return [best_move, min_value];
 }
 
-export default function aiGetBestMove(chess, num){
+export default function aiGetBestMove(chess, num, color = 'b'){
     let depth = num;
-    let move = minimax(chess, depth, -99999, 99999, true, 0, 'b');
+    let move = minimax(chess, depth, -99999, 99999, true, 0, color);
     return move[0];
 }
