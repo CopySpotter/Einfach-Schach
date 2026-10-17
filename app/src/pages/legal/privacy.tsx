@@ -70,25 +70,18 @@ export default function PrivacyPage() {
 
         <section style={sectionStyle}>
           <Typography component="h2" variant="h5" gutterBottom>
-            Verbindungen zu anderen Anbietern
+            Keine externen Browser-Verbindungen im normalen Spielbetrieb
           </Typography>
           <Typography paragraph>
-            Die aktuelle Programmfassung stellt beim Laden der Seite zwei
-            externe Verbindungen her: zu Google Fonts für die Schriftarten und
-            zu <code>analysis.cryptomonkeys.cc</code> für das eingebundene
-            Analyse-Skript. Dabei erhält der jeweilige Anbieter technisch
-            notwendige Verbindungsdaten, insbesondere die IP-Adresse sowie
-            Browser- und Zugriffsangaben. Diese Verbindungen sind auch bei
-            einer lokalen Nutzung vorhanden, solange der Computer online ist.
+            Die aktuelle Programmfassung lädt keine Google-Webfonts und kein
+            externes Analyse-Skript mehr. Beim normalen Spielen unter{' '}
+            <code>localhost</code> werden daher keine Profil-, Schach- oder
+            Spielstanddaten an externe Anbieter gesendet.
           </Typography>
           <Typography paragraph>
-            Einfach-Schach selbst übermittelt im normalen Spielablauf keine
-            Profil-, Schach- oder Spielstanddaten an diese Anbieter. Die genaue
-            Verarbeitung durch die Anbieter richtet sich nach deren eigenen
-            Datenschutzhinweisen. Die Anwendung zeigt kein Cookie-
-            Einwilligungsfenster. Ob die eingebundenen Anbieter Browserdaten
-            oder Speichertechniken einsetzen, wird von dieser Anwendung nicht
-            gesteuert.
+            Die Anwendung setzt kein Analysewerkzeug und kein
+            Cookie-Einwilligungsfenster ein. Falls später externe Dienste eingebunden
+            werden, muss dieser Hinweis vorher entsprechend ergänzt werden.
           </Typography>
         </section>
 
@@ -97,12 +90,10 @@ export default function PrivacyPage() {
             Entwicklungswerkzeug
           </Typography>
           <Typography paragraph>
-            Einfach-Schach wird derzeit mit Next.js gestartet. Bei Befehlen
-            wie <code>npm run dev</code> oder <code>npm run build</code> kann
-            Next.js nach seiner Voreinstellung anonyme Nutzungsdaten zur
-            Weiterentwicklung des Frameworks übermitteln. Diese Telemetrie ist
-            keine Spiel- oder Profildatenverarbeitung von Einfach-Schach und
-            kann in der lokalen Entwicklungsumgebung abgeschaltet werden.
+            Einfach-Schach wird derzeit mit Next.js gestartet. Next.js ist in
+            dieser Fassung so konfiguriert, dass seine anonyme
+            Telemetrie deaktiviert ist. Damit werden auch beim lokalen Start
+            oder beim Build keine Next.js-Telemetriedaten gesendet.
           </Typography>
         </section>
 
@@ -130,8 +121,8 @@ export default function PrivacyPage() {
           </Typography>
           <Typography paragraph>
             Diese Fassung bietet keine Bezahlung, keinen Vertragsschluss,
-            keinen Newsletter, kein Kontaktformular und keine E-Mail-
-            Benachrichtigungen. Sie behauptet auch keine besondere
+            keinen Newsletter, kein Kontaktformular und keine E-Mail-Benachrichtigungen.
+            Sie behauptet auch keine besondere
             Verschlüsselung, keine Aufbewahrungsfristen und keine
             Datenübermittlungen, die im Programm nicht tatsächlich umgesetzt
             sind.
