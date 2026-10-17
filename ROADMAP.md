@@ -4,6 +4,8 @@
 
 Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuvor ungebundenen MUI-/Emotion-Abhängigkeiten sind auf eine funktionierende Kombination festgelegt. Für die lokale Benutzerdatenbank gibt es `app/src/data/users.example.json`. Der Absturz der alten KI-Bewertung bei unvollständigen Zugdaten ist defensiv abgefangen.
 
+Patch `v0.1.0.1` ergänzt keine Spielfunktionen. Er entfernt externe Browser-Anfragen für Analyse und Webfonts, deaktiviert Next.js-Telemetrie und dokumentiert den tatsächlichen lokalen Datenfluss unter `/legal/privacy`.
+
 Der Arbeitsstand auf `develop` enthält zusätzlich CI, die funktionale Bestandsaufnahme sowie den lokal getesteten Legacy-Cleanup aus PR #2. TypeScript-Check und Produktions-Build laufen dort erfolgreich in GitHub Actions.
 
 ## Bereits vorhandene Funktionen

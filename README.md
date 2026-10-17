@@ -2,6 +2,10 @@
 
 Einfach-Schach ist eine Schachanwendung mit Fokus auf einfache Bedienung und gute Zugänglichkeit. Die Anwendung basiert auf Next.js 12, React 17, chess.js und Chessground.
 
+## Stabile Korrektur v0.1.0.1
+
+Dieser Patch ändert keine Schachfunktionen. Er entfernt das fremde Analyse-Skript und Google-Webfonts, deaktiviert die anonyme Next.js-Telemetrie und ersetzt die kopierte, unzutreffende Datenschutzerklärung durch einen technischen Hinweis zum tatsächlichen lokalen Datenfluss. Beim normalen Spielen unter `localhost` werden dadurch keine Profil-, Schach- oder Spielstanddaten an diese externen Dienste gesendet.
+
 ## Voraussetzungen
 
 Empfohlen und getestet ist **Node.js 18**. Zusätzlich wird **Git** benötigt.

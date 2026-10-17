@@ -2,6 +2,10 @@
 
 Stand: `develop`, 10. September 2026
 
+## Stabiler Patch v0.1.0.1 (18. Oktober 2026)
+
+Der Patch auf `main` verändert weder Regeln noch Oberfläche des Spiels. Er entfernt ausschließlich das fremde Analyse-Skript, die extern geladenen Google-Webfonts und die anonyme Next.js-Telemetrie. Die Seite `/legal/privacy` beschreibt nun den tatsächlichen Zustand: lokale Profildaten liegen in `app/src/data/users.json`; beim normalen Betrieb unter `localhost` werden keine Profil-, Schach- oder Spielstanddaten an diese entfernten Dienste gesendet. Die im Quellcode vorhandene Gesichtserkennung ist keine aktive Anmeldefunktion.
+
 ## Bestätigt
 
 - Lokaler Start unter Linux funktioniert.
