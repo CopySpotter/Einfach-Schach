@@ -61,7 +61,7 @@ function IndexPage() {
             <Typography
               variant="h3"
               component="h1"
-              sx={{ mb: 5, fontFamily: 'Anton' }}
+              sx={{ mb: 5, fontFamily: 'Arial Black, Arial, sans-serif' }}
               gutterBottom
             >
               Einfach Schach
