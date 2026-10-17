@@ -6,7 +6,7 @@ Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuv
 
 Der Arbeitsstand auf `develop` enthält zusätzlich CI, die funktionale Bestandsaufnahme sowie den lokal getesteten Legacy-Cleanup aus PR #2. TypeScript-Check und Produktions-Build laufen dort erfolgreich in GitHub Actions.
 
-## Aktuelle Vorabversion: `v0.1.1-rc.2`
+## Aktuelle Vorabversion: `v0.1.1-rc.3`
 
 Der separate öffentliche Branch `feature/pgn-export` ist der getestete
 Release-Candidate für die nächste kleine Ausbaustufe. Er ergänzt die freie
@@ -17,7 +17,9 @@ elfenbeinfarbenen und nussbraunen Feldern; die vorhandenen Cburnett-Figuren
 sind klassische Staunton-Figuren und bleiben erhalten. Der Stand ist bewusst
 noch nicht in `main` übernommen. Die vollständige Freigabe- und
 Grenzdokumentation steht in
-[`docs/RELEASE-v0.1.1-rc.2.md`](docs/RELEASE-v0.1.1-rc.2.md).
+[`docs/RELEASE-v0.1.1-rc.3.md`](docs/RELEASE-v0.1.1-rc.3.md).
+
+Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfonts; die lokale Next.js-Telemetrie ist deaktiviert. Der Datenschutz-Hinweis beschreibt jetzt den tatsächlichen lokalen Datenfluss.
 
 ## Bereits vorhandene Funktionen
 
