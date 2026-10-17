@@ -2,6 +2,30 @@
 
 Stand: `develop`, 10. September 2026
 
+## Ergänzung: Vorabversion `v0.1.1-rc.1` auf `feature/pgn-export`
+
+Die nachstehenden Bestandsangaben beschreiben den früheren Stand auf
+`develop`. Für den Release Candidate wurde die freie Partie erweitert:
+
+- **PGN speichern:** Die im aktuell geöffneten Browser gespielte Zugfolge kann
+  während der Partie und im Ergebnisdialog als PGN-Datei gespeichert werden.
+- **Brett drehen:** Die Ansicht lässt sich jederzeit über „Brett drehen"
+  wechseln. Das ändert nur die Ansicht, nicht die Spielerfarbe.
+- **Mit Schwarz spielen:** Vor dem ersten Zug fordert „Zieh" die Engine auf,
+  Weiß zu spielen. Das Brett dreht zu Schwarz; anschließend spielt die Person
+  Schwarz und die Engine antwortet mit Weiß.
+- Die Engine-Suche erhält die gewünschte Farbe als Parameter und kann daher
+  legal für Weiß oder Schwarz einen Zug auswählen.
+
+**Geprüft:** TypeScript-Check und Production-Build waren erfolgreich. Die
+Engine-Auswahl wurde für Weiß und Schwarz mit legalen Zügen geprüft; die
+Schwarz-Partie wurde im Browser manuell bestätigt.
+
+**Bekannte Grenze:** Spielerfarbe und vollständige Zugfolge werden noch nicht
+über einen Seitenneustart gespeichert. Eine Schwarz-Partie daher nicht
+aktualisieren oder schließen; zuvor bei Bedarf PGN speichern. Details:
+[`RELEASE-v0.1.1-rc.1.md`](RELEASE-v0.1.1-rc.1.md).
+
 ## Bestätigt
 
 - Lokaler Start unter Linux funktioniert.
