@@ -2,6 +2,20 @@
 
 Stand: `develop`, 10. September 2026
 
+## Ergänzung: Vorabversion `v0.1.1-rc.3` auf `feature/pgn-export`
+
+Die Vorabversion `v0.1.1-rc.3` bereinigt den lokalen Datenfluss und ersetzt den kopierten, inhaltlich falschen Datenschutztext durch einen technischen Hinweis zum tatsächlichen Programmstand.
+
+- Das externe Analyse-Skript wurde aus `pages/_app.tsx` entfernt.
+- Die nachgeladenen Google-Webfonts wurden aus `pages/_document.js` entfernt. Die Oberfläche verwendet nun Schriften, die auf dem jeweiligen Computer vorhanden sind.
+- `app/.env` setzt `NEXT_TELEMETRY_DISABLED=1`; die anonyme Next.js-Telemetrie ist beim lokalen Start und beim Build deaktiviert.
+- `/legal/privacy` nennt nur noch die tatsächlich gespeicherten lokalen Profildaten, die nicht aktiv angebotene Face-Alt-Komponente und die Grenzen einer späteren öffentlichen Bereitstellung.
+- Es wurden keine Schachregeln, keine Engine, keine PGN-Logik und keine Spielstände verändert.
+
+Im normalen Spielbetrieb unter `localhost` lädt die Oberfläche keine fremden Browser-Skripte oder Webfonts. Die optionale Face-Komponente bleibt im Code, ist jedoch im Login nicht erreichbar und wird dadurch nicht gestartet.
+
+Vollständige Freigabedokumentation: [`RELEASE-v0.1.1-rc.3.md`](RELEASE-v0.1.1-rc.3.md).
+
 ## Ergänzung: Vorabversion `v0.1.1-rc.2` auf `feature/pgn-export`
 
 Die Vorabversion `v0.1.1-rc.2` ergänzt den vorherigen Release Candidate um ein
