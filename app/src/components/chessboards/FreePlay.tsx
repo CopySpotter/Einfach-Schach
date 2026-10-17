@@ -532,6 +532,14 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       </Button>
     </>
   );
+  const displayedBoard =
+    orientation === 'white'
+      ? chess.board()
+      : chess
+          .board()
+          .slice()
+          .reverse()
+          .map((row) => row.slice().reverse());
   return (
     <>
       <SuccessDialog
@@ -601,7 +609,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
           }}
         >
           {!actionState && readyToRender
-            ? chess.board().map((row) => (
+            ? displayedBoard.map((row) => (
                 <tr>
                   {row.map((col) => {
                     if (col != null) {
@@ -623,7 +631,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
                   })}
                 </tr>
               ))
-            : chess.board().map((row, i) => (
+            : displayedBoard.map((row, i) => (
                 <tr>
                   {row.map((col, j) => {
                     if (col != null) {
@@ -656,8 +664,10 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
                         return <td style={{ backgroundColor: 'none' }}></td>;
                       }
                     } else {
-                      let r = 8 - i; //numbers
-                      let c = String.fromCharCode(97 + j); //letters
+                      let r = orientation === 'white' ? 8 - i : i + 1;
+                      let c = String.fromCharCode(
+                        orientation === 'white' ? 97 + j : 104 - j
+                      );
                       let num = movesPos.findIndex((elem) => elem[0] === c + r);
                       if (num > 0) {
                         return (
