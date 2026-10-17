@@ -52,12 +52,14 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
   const [movesPos, setMovesPos] = useState<string[]>([]);
   const [startState, setStartState] = useState(true);
   const [focus, setFocus] = useState(false);
+  const [orientation, setOrientation] = useState<'white' | 'black'>('white');
 
   const ref = useRef<HTMLDivElement>(null);
   const logic_container = useRef<HTMLDivElement>(null);
 
   config = {
     ...config,
+    orientation,
     movable: {
       color: 'white',
       free: false,
@@ -85,6 +87,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
     api?.set({
       fen: user.currentGame,
       ...config,
+      orientation,
       movable: {
         color: toColor(chess),
         dests: toDests(chess),
@@ -682,10 +685,41 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
           width: width,
           display: 'flex',
           justifyContent: 'flex-end',
+          gap: '0.5rem',
           marginTop: '0.9rem',
           paddingRight: '0.25rem'
         }}
       >
+        <Button
+          size="small"
+          variant="text"
+          onClick={() =>
+            setOrientation((currentOrientation) =>
+              currentOrientation === 'white' ? 'black' : 'white'
+            )
+          }
+          aria-label="Schachbrett drehen"
+          aria-pressed={orientation === 'black'}
+          sx={{
+            minWidth: 'auto',
+            padding: '0.4rem 0.7rem',
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 1.5,
+            backgroundColor: 'rgba(255, 255, 255, 0.88)',
+            color: 'text.secondary',
+            fontSize: '0.75rem',
+            fontWeight: 400,
+            lineHeight: 1.2,
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 1)',
+              borderColor: 'text.secondary'
+            }
+          }}
+        >
+          ↻ Brett drehen
+        </Button>
         <Button
           size="small"
           variant="text"
