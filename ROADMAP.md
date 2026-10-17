@@ -6,15 +6,18 @@ Der Stand auf `main` läuft unter Linux mit Next.js 12.3.4 und React 17. Die zuv
 
 Der Arbeitsstand auf `develop` enthält zusätzlich CI, die funktionale Bestandsaufnahme sowie den lokal getesteten Legacy-Cleanup aus PR #2. TypeScript-Check und Produktions-Build laufen dort erfolgreich in GitHub Actions.
 
-## Aktuelle Vorabversion: `v0.1.1-rc.1`
+## Aktuelle Vorabversion: `v0.1.1-rc.2`
 
 Der separate öffentliche Branch `feature/pgn-export` ist der getestete
 Release-Candidate für die nächste kleine Ausbaustufe. Er ergänzt die freie
 Partie um PGN-Export, Brettdrehung und die Möglichkeit, Schwarz zu spielen:
 „Zieh“ lässt die Engine mit Weiß beginnen, danach spielt die Person Schwarz.
-Der Stand ist bewusst noch nicht in `main` übernommen. Die vollständige
-Freigabe- und Grenzdokumentation steht in
-[`docs/RELEASE-v0.1.1-rc.1.md`](docs/RELEASE-v0.1.1-rc.1.md).
+Zusätzlich verwendet das Brett jetzt ein ruhiges Turnierdesign aus
+elfenbeinfarbenen und nussbraunen Feldern; die vorhandenen Cburnett-Figuren
+sind klassische Staunton-Figuren und bleiben erhalten. Der Stand ist bewusst
+noch nicht in `main` übernommen. Die vollständige Freigabe- und
+Grenzdokumentation steht in
+[`docs/RELEASE-v0.1.1-rc.2.md`](docs/RELEASE-v0.1.1-rc.2.md).
 
 ## Bereits vorhandene Funktionen
 

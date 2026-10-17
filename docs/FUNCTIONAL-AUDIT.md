@@ -2,6 +2,29 @@
 
 Stand: `develop`, 10. September 2026
 
+## Ergänzung: Vorabversion `v0.1.1-rc.2` auf `feature/pgn-export`
+
+Die Vorabversion `v0.1.1-rc.2` ergänzt den vorherigen Release Candidate um ein
+klassisches, zurückhaltendes Turnierdesign. Es ändert keine Schachlogik.
+
+- `app/public/chessground.tournament.css` definiert die Brettfarben:
+  Elfenbein (`#f2e4c9`) und Nussbaum (`#a86e45`).
+- Die Chessground-Interaktionsfarben für mögliche Ziele, Auswahl, letzten Zug,
+  Schach und Vormerkungen wurden in dieselbe ruhige Farbwelt überführt.
+- Die Figuren bleiben die eingebauten `cburnett`-Grafiken von Chessground. Das
+  ist ein klar erkennbarer klassischer Staunton-Satz; leichte CSS-Anpassungen
+  geben weißen Figuren einen warmen Elfenbeinton und dunklen Figuren einen
+  zurückhaltenden warmen Akzent.
+- Alle freien Partien und Trainingsbretter verwenden das Design, weil die
+  zentrale CSS-Datei in `pages/_app.tsx` geladen wird.
+
+Es ist **kein Chessground-Fork** und keine Änderung am Chessground-Code
+notwendig. Regeln, Engine, PGN, Farbenwahl und Speicherung bleiben unverändert.
+Der frühere Stand `v0.1.1-rc.1` ist darin vollständig enthalten.
+
+Vollständige Freigabedokumentation:
+[`RELEASE-v0.1.1-rc.2.md`](RELEASE-v0.1.1-rc.2.md).
+
 ## Ergänzung: Vorabversion `v0.1.1-rc.1` auf `feature/pgn-export`
 
 Die nachstehenden Bestandsangaben beschreiben den früheren Stand auf
