@@ -53,6 +53,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
   const [startState, setStartState] = useState(true);
   const [focus, setFocus] = useState(false);
   const [orientation, setOrientation] = useState<'white' | 'black'>('white');
+  const [playerColor, setPlayerColor] = useState<'w' | 'b'>('w');
 
   const ref = useRef<HTMLDivElement>(null);
   const logic_container = useRef<HTMLDivElement>(null);
@@ -61,7 +62,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
     ...config,
     orientation,
     movable: {
-      color: 'white',
+      color: chess.turn() === playerColor ? toColor(chess) : undefined,
       free: false,
       dests: toDests(chess)
     },
@@ -89,10 +90,10 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       ...config,
       orientation,
       movable: {
-        color: toColor(chess),
+        color: chess.turn() === playerColor ? toColor(chess) : undefined,
         dests: toDests(chess),
         events: {
-          after: aiPlay(api, chess, user.animationSpeed, false)
+          after: aiPlay(api, chess, user.animationSpeed)
         }
       }
     });
@@ -110,26 +111,18 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
   if (auswahl != 'none') {
     chess.move({ from: bauer.from, to: bauer.to, promotion: auswahl });
     setTimeout(() => {
-      callHiddenWindow({ type: 'promotion', color: 'b', piece: bauer.to });
+      callHiddenWindow({ type: 'promotion', color: playerColor, piece: bauer.to });
     }, 2100);
 
     setTimeout(() => {
       setCG(api, chess);
-      const moves = chess.moves({ verbose: true });
-      const move = moves[Math.floor(Math.random() * moves.length)];
-      //@ts-ignore
-      chess.move(move.san);
-      //@ts-ignore
-      api.move(move.from, move.to);
-      api.set({
-        turnColor: toColor(chess),
-        movable: {
-          color: toColor(chess),
-          dests: toDests(chess)
-        }
-      });
-      api.playPremove();
-      updateUser();
+      playEngineMove(
+        api,
+        chess,
+        user.animationSpeed,
+        playerColor === 'w' ? 'b' : 'w',
+        playerColor
+      );
     }, 1000);
     setBauer({ from: 'v4', to: 'x4' });
     setAuswahl('none');
@@ -140,7 +133,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       fen: chess.fen(),
       turnColor: toColor(chess),
       movable: {
-        color: toColor(chess),
+        color: chess.turn() === playerColor ? toColor(chess) : undefined,
         dests: toDests(chess)
       },
       highlight: {
@@ -252,9 +245,9 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
       'Round',
       '-',
       'White',
-      playerName,
+      playerColor === 'w' ? playerName : 'Einfach-Schach',
       'Black',
-      'Einfach-Schach',
+      playerColor === 'b' ? playerName : 'Einfach-Schach',
       'Result',
       result
     );
@@ -286,7 +279,7 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
 
   const startActionState = (type: string, cgKey: any, color: string) => {
     if (user.figureSound) playTypeSound(type);
-    if (color === 'w') {
+    if (color === playerColor) {
       api.selectSquare(cgKey);
       getMovesPos(cgKey);
       setActionState(true);
@@ -328,177 +321,171 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
     setMovesPos(moves);
   };
 
-  function aiPlay(cg: Api, chess: Chess, delay: number, firstMove: boolean) {
-    console.log(user.blindMode);
-    return (orig, dest) => {
-      const destFigure = chess.get(orig);
+  function playEngineMove(
+    cg: Api,
+    game: Chess,
+    delay: number,
+    engineColor: 'w' | 'b',
+    humanColor: 'w' | 'b'
+  ) {
+    const move = aiGetBestMove(game, 2, engineColor);
+    if (!move) return;
 
+    //@ts-ignore
+    game.move(move.san);
+    if (typeof move.captured != 'undefined') {
+      if (user.boardSound) playMoveSound('capture');
+      if (user.blindMode) {
+        callHiddenWindow({
+          type: 'normal',
+          piece: move.piece,
+          destination: move.to
+        });
+        setTimeout(
+          () =>
+            callHiddenWindow({
+              type: 'capture',
+              piece: move.captured,
+              color: humanColor
+            }),
+          100
+        );
+      }
+    } else if (move.san == 'O-O') {
+      if (user.boardSound) playMoveSound('rochade');
+      if (user.blindMode)
+        callHiddenWindow({ type: 'rochade', color: engineColor });
+    } else {
+      if (user.boardSound) playMoveSound('normal');
+      if (user.blindMode)
+        callHiddenWindow({
+          type: 'normal',
+          piece: move.piece,
+          destination: move.to
+        });
+    }
+
+    if (game.isCheck()) {
+      setTimeout(() => {
+        if (user.boardSound) playMoveSound('check');
+        if (user.blindMode)
+          callHiddenWindow({ type: 'check', color: humanColor });
+      }, delay + 200);
+    }
+
+    if (game.isGameOver()) {
+      userReset();
+      if (user.boardSound) playMoveSound('lost');
+      if (user.blindMode) callHiddenWindow({ type: 'lose' });
+      setLose(true);
+    } else {
+      //@ts-ignore
+      cg.move(move.from, move.to);
+      cg.set({
+        turnColor: toColor(game),
+        movable: {
+          color: game.turn() === humanColor ? toColor(game) : undefined,
+          dests: toDests(game)
+        }
+      });
+      cg.playPremove();
+      updateUser();
+    }
+    setChess(game);
+    setTimeout(() => setReadyToRender(true), delay + 800);
+    if (user.blindMode)
+      setTimeout(() => {
+        callHiddenWindow({ type: 'turn', color: game.turn() });
+        setTimeout(() => document.getElementById('logic_container').focus(), 100);
+      }, delay);
+  }
+
+  function aiPlay(cg: Api, game: Chess, delay: number) {
+    return (orig, dest) => {
+      const destFigure = game.get(orig);
       if (
-        dest[1] === '8' &&
-        destFigure.color === 'w' &&
-        destFigure.type === 'p'
-      ) {
+        !destFigure ||
+        destFigure.color !== playerColor ||
+        game.turn() !== playerColor
+      )
+        return;
+
+      const promotionRank = playerColor === 'w' ? '8' : '1';
+      if (dest[1] === promotionRank && destFigure.type === 'p') {
         setPromo(true);
         setBauer({ from: orig, to: dest });
-        setTimeout(() => {
-          if (user.boardSound) playMoveSound('promotion');
-        }, delay + 1000);
-      } else {
-        const move = chess.move({ from: orig, to: dest });
-        //console.log('white: ' + orig + ' -> ' + dest);
-        if (typeof move.captured != 'undefined') {
-          if (user.boardSound) playMoveSound('capture');
-          if (user.blindMode) {
-            callHiddenWindow({
-              type: 'normal',
-              piece: move.piece,
-              destination: move.to
-            });
-            setTimeout(
-              () =>
-                callHiddenWindow({
-                  type: 'capture',
-                  piece: move.captured,
-                  color: 'b'
-                }),
-              100
-            );
-          }
-        } else if (move.san == 'O-O') {
-          if (user.boardSound) playMoveSound('rochade');
-          if (user.blindMode) callHiddenWindow({ type: 'rochade', color: 'w' });
-        } else {
-          if (user.boardSound) playMoveSound('normal');
-          if (user.blindMode)
-            callHiddenWindow({
-              type: 'normal',
-              piece: move.piece,
-              destination: move.to
-            });
-        }
-
-        if (chess.isCheck()) {
-          setTimeout(() => {
-            if (user.boardSound) playMoveSound('check');
-            if (user.blindMode) callHiddenWindow({ type: 'check', color: 'b' });
-          }, delay + 200);
-        }
-
-        if (chess.isCheckmate()) {
-          userReset();
-          if (user.boardSound) playMoveSound('won');
-          if (user.blindMode) callHiddenWindow({ type: 'won' });
-          setWin(true);
-        } else {
-          setTimeout(() => {
-            const move = aiGetBestMove(chess, 2);
-            //const moves = chess.moves({verbose:true});
-            //const move = firstMove ? moves[0] : moves[Math.floor(Math.random() * moves.length)] ;
-            //@ts-ignore
-            chess.move(move.san);
-            //console.log('black: ' + move.from + ' -> ' + move.to);
-            if (typeof move.captured != 'undefined') {
-              if (user.boardSound) playMoveSound('capture');
-              if (user.blindMode) {
-                callHiddenWindow({
-                  type: 'normal',
-                  piece: move.piece,
-                  destination: move.to
-                });
-                setTimeout(
-                  () =>
-                    callHiddenWindow({
-                      type: 'capture',
-                      piece: move.captured,
-                      color: 'w'
-                    }),
-                  100
-                );
-              }
-            } else if (move.san == 'O-O') {
-              if (user.boardSound) playMoveSound('rochade');
-              if (user.blindMode)
-                callHiddenWindow({ type: 'rochade', color: 'b' });
-            } else {
-              if (user.boardSound) playMoveSound('normal');
-              if (user.blindMode)
-                callHiddenWindow({
-                  type: 'normal',
-                  piece: move.piece,
-                  destination: move.to
-                });
-            }
-
-            if (move.to[1] === '1' && move.piece === 'p') {
-              setTimeout(() => setBauer({ from: orig, to: dest }), delay + 100);
-              setTimeout(() => {
-                if (user.boardSound) playMoveSound('promotion');
-              }, delay + 100);
-              if (user.blindMode)
-                setTimeout(() => {
-                  callHiddenWindow({
-                    type: 'promotion',
-                    color: 'w',
-                    piece: auswahl
-                  });
-                }, delay + 100);
-            }
-
-            if (chess.isCheck()) {
-              setTimeout(() => {
-                if (user.boardSound) playMoveSound('check');
-                if (user.blindMode)
-                  callHiddenWindow({ type: 'check', color: 'w' });
-              }, delay + 200);
-            }
-
-            if (chess.isGameOver()) {
-              userReset();
-              if (user.boardSound) playMoveSound('lost');
-              if (user.blindMode) callHiddenWindow({ type: 'lose' });
-              setLose(true);
-            } else {
-              //@ts-ignore
-              cg.move(move.from, move.to);
-              cg.set({
-                turnColor: toColor(chess),
-                movable: {
-                  color: toColor(chess),
-                  dests: toDests(chess)
-                }
-              });
-              cg.playPremove();
-              updateUser();
-            }
-            setChess(chess);
-            setTimeout(() => {
-              setReadyToRender(true);
-            }, delay + 800);
-            if (user.blindMode)
-              setTimeout(() => {
-                callHiddenWindow({ type: 'turn', color: chess.turn() });
-                setTimeout(
-                  () => document.getElementById('logic_container').focus(),
-                  100
-                );
-              }, delay);
-          }, delay + 800);
-        }
+        setReadyToRender(false);
+        if (user.boardSound)
+          setTimeout(() => playMoveSound('promotion'), delay + 1000);
+        return;
       }
-      setChess(chess);
-      setTimeout(() => {
-        setReadyToRender(true);
-      }, delay + 800);
-      if (user.blindMode)
-        setTimeout(() => {
-          callHiddenWindow({ type: 'turn', color: chess.turn() });
+
+      const move = game.move({ from: orig, to: dest });
+      if (!move) return;
+      const engineColor = playerColor === 'w' ? 'b' : 'w';
+      if (typeof move.captured != 'undefined') {
+        if (user.boardSound) playMoveSound('capture');
+        if (user.blindMode) {
+          callHiddenWindow({ type: 'normal', piece: move.piece, destination: move.to });
           setTimeout(
-            () => document.getElementById('logic_container').focus(),
+            () =>
+              callHiddenWindow({
+                type: 'capture',
+                piece: move.captured,
+                color: engineColor
+              }),
             100
           );
-        }, delay);
+        }
+      } else if (move.san == 'O-O') {
+        if (user.boardSound) playMoveSound('rochade');
+        if (user.blindMode) callHiddenWindow({ type: 'rochade', color: playerColor });
+      } else {
+        if (user.boardSound) playMoveSound('normal');
+        if (user.blindMode)
+          callHiddenWindow({
+            type: 'normal',
+            piece: move.piece,
+            destination: move.to
+          });
+      }
+
+      if (game.isCheck()) {
+        setTimeout(() => {
+          if (user.boardSound) playMoveSound('check');
+          if (user.blindMode) callHiddenWindow({ type: 'check', color: engineColor });
+        }, delay + 200);
+      }
+
+      setChess(game);
+      if (game.isCheckmate()) {
+        userReset();
+        if (user.boardSound) playMoveSound('won');
+        if (user.blindMode) callHiddenWindow({ type: 'won' });
+        setWin(true);
+        setReadyToRender(true);
+        return;
+      }
+
+      setReadyToRender(false);
+      setTimeout(
+        () => playEngineMove(cg, game, delay, engineColor, playerColor),
+        delay + 800
+      );
     };
   }
+
+  const letEngineStart = () => {
+    if (!api || chess.history().length !== 0 || chess.turn() !== 'w') return;
+
+    setPlayerColor('b');
+    setOrientation('black');
+    setReadyToRender(false);
+    setTimeout(
+      () => playEngineMove(api, chess, user.animationSpeed, 'w', 'b'),
+      200
+    );
+  };
 
   const OptionalButtons = (
     <>
@@ -700,6 +687,32 @@ function ChessgroundFree({ width = 450, config = {} }: Props) {
           paddingRight: '0.25rem'
         }}
       >
+        <Button
+          size="small"
+          variant="text"
+          onClick={letEngineStart}
+          disabled={!api || chess.history().length !== 0 || chess.turn() !== 'w'}
+          aria-label="KI zieht als Weiß und du spielst Schwarz"
+          sx={{
+            minWidth: 'auto',
+            padding: '0.4rem 0.7rem',
+            border: '1px solid',
+            borderColor: 'divider',
+            borderRadius: 1.5,
+            backgroundColor: 'rgba(255, 255, 255, 0.88)',
+            color: 'text.secondary',
+            fontSize: '0.75rem',
+            fontWeight: 400,
+            lineHeight: 1.2,
+            textTransform: 'none',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 1)',
+              borderColor: 'text.secondary'
+            }
+          }}
+        >
+          Zieh
+        </Button>
         <Button
           size="small"
           variant="text"
