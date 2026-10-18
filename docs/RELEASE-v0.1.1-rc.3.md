@@ -31,7 +31,9 @@ Browser-Dienste geladen werden.
    Schachserver.
 4. Beim normalen Spielen lädt der Browser keine Analyse-Skripte und keine
    Webfonts von außen.
-5. Ein Gastspiel wird nicht als eigenes Profil in `users.json` gespeichert.
+5. Ein Gastspiel wird nicht als eigenes Profil in `users.json` gespeichert. Der
+   Übungsfortschritt eines Gasts bleibt nur in der aktuellen Browser-Sitzung
+   erhalten und wird beim Abmelden gelöscht.
 
 Bei einer frischen Installation fehlt diese Datei zunächst absichtlich. Die
 App verwendet dann die mitgelieferte leere Vorlage und startet trotzdem. Erst

@@ -15,6 +15,7 @@ import 'chessground/assets/chessground.base.css';
 import 'chessground/assets/chessground.cburnett.css';
 import PromotionDialog from '../modals/PromotionModal';
 import ProgressBar from '../progress/ProgressBar';
+import { saveGuestTrainingProgress } from '../../utils/guest-progress';
 
 interface TrainPlayProps {
   width?: number;
@@ -206,6 +207,8 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
 
     if (user.id != 999999) {
       fetchWrapper.post('/api/users/update', { ...nextUser });
+    } else {
+      saveGuestTrainingProgress(nextUser);
     }
     setUser(nextUser);
     resetExerciseState();

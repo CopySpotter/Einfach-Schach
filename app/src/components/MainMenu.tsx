@@ -9,6 +9,7 @@ import { useStore } from '../utils/store';
 import ConfirmationDialog from './modals/ConfirmationModal';
 import { useState } from 'react';
 import chapters from '../data/training.json';
+import { clearGuestTrainingProgress } from '../utils/guest-progress';
 
 export default function MainMenu(store: UserState) {
   const [confirm, setConfirmation] = useState(false);
@@ -25,6 +26,9 @@ export default function MainMenu(store: UserState) {
     router.push('/train');
   };
   const logout = () => {
+    if (user.id === 999999) {
+      clearGuestTrainingProgress();
+    }
     setLoggedInState({
       ...defaultUserSchema,
       id: 0,

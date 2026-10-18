@@ -9,6 +9,7 @@ import Image from 'next/image';
 import logo from '../../public/logo.png';
 import { useRouter } from 'next/router';
 import GenericButton from '../components/buttons/GenericButton';
+import { loadGuestTrainingProgress } from '../utils/guest-progress';
 
 function IndexPage() {
   const store = useStore();
@@ -25,6 +26,7 @@ function IndexPage() {
   };
 
   const guest = () => {
+    const guestProgress = loadGuestTrainingProgress();
     store.setLoggedInState({
       id: 999999,
       name: 'Gast',
@@ -34,10 +36,10 @@ function IndexPage() {
       currentGame: '',
       dateUpdated: '0',
       dateCreated: '0',
-      coursesFinishedTotal: 0,
+      coursesFinishedTotal: guestProgress.coursesFinishedTotal,
       wantsToClick: false,
       animationSpeed: 2000,
-      chapterProgression: {},
+      chapterProgression: guestProgress.chapterProgression,
       blindMode: false,
       figureSound: true,
       boardSound: false
