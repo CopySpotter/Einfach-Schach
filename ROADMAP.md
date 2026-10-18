@@ -58,6 +58,18 @@ Der Arbeitsstand auf `develop` enthält zusätzlich CI, die funktionale Bestands
 - [ ] akustische Bedienung verständlicher und konsistenter machen
 - [ ] optional einen besonders reduzierten „Einfach-Modus“ vorsehen
 
+## Neue Baustelle – optionale lokale Analysehilfe mit TunaFish
+
+TunaFish ist eine geplante, getrennte Schach-Analyse-Engine für das inklusive Schachprojekt Einfach-Schach. Die vorhandene einfache Computergegnerin bleibt unverändert. TunaFish soll nur auf Wunsch einen „Gefahrencheck“ anbieten: Was wäre die stärkste Antwort der Gegenseite auf einen geplanten Zug?
+
+- [ ] TunaFish eigenständig stabilisieren: Installation, Tests und lokaler Web Worker
+- [ ] Schnittstelle festlegen: FEN + Rechentiefe hinein; bester Gegenzug, Bewertung und Hauptvariante zurück
+- [ ] kleinen Adapter für Einfach-Schach bauen – ohne Git-Submodule
+- [ ] freiwilligen Gefahrencheck ergänzen: Denkfrage → Brettmarkierung → konkrete Gefahr und mögliche Abwehr
+- [ ] vollständig lokal/offline testen sowie Lizenz- und Herkunftshinweise dokumentieren
+
+**Grundsatz:** TunaFish rechnet; Einfach-Schach bleibt für Brett, Bedienung und die pädagogische Erklärung zuständig. Es gibt keine automatische Zugausführung und keine Übertragung von Stellungen an einen Server.
+
 ## Arbeitspaket 4 – Technische Modernisierung
 
 Erst nach stabiler Bestandsaufnahme.
