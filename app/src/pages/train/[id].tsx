@@ -17,7 +17,9 @@ import LongPressButton from '../../components/buttons/LongPressButton';
 function buildBoards(chapter:Chapter,size, setSelectedCourse, completed): Record<number,any> {
   let chapterChooser: Record<number,any> = {0:null};
 
-  const courses = completed ? getMultipleRandomCourses(chapter.courses,10) : chapter.courses.sort();
+  const courses = completed
+    ? getMultipleRandomCourses(chapter.courses, 10)
+    : [...chapter.courses];
   
   courses.forEach((course, index) => {
     let prop = {
@@ -77,6 +79,20 @@ function TrainIdPage() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <CircularProgress />
         </div>
+      </Container>
+    );
+  }
+  if (!data.chapter) {
+    return (
+      <Container component="main" maxWidth="xs">
+        <Box sx={{ marginTop: 8, textAlign: 'center' }}>
+          <Typography gutterBottom variant="h5">
+            Dieses Trainingskapitel gibt es nicht.
+          </Typography>
+          <Button variant="contained" onClick={() => router.push('/train')}>
+            Zur Kapitelübersicht
+          </Button>
+        </Box>
       </Container>
     );
   }

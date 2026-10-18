@@ -55,9 +55,17 @@ export function useWindowSize(): windowSize {
 
 
 export function getMultipleRandomCourses(arr:Course[], num:number) {
-  arr.sort(() => Math.random())
-  
-  return arr.slice(0, num);
+  const shuffledCourses = [...arr];
+
+  for (let index = shuffledCourses.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffledCourses[index], shuffledCourses[randomIndex]] = [
+      shuffledCourses[randomIndex],
+      shuffledCourses[index]
+    ];
+  }
+
+  return shuffledCourses.slice(0, Math.min(num, shuffledCourses.length));
 }
 
 export function getCourse(user:User, chapterId:any){

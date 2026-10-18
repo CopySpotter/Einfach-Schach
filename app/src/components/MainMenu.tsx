@@ -8,6 +8,7 @@ import { defaultUserSchema } from '../interfaces/constants';
 import { useStore } from '../utils/store';
 import ConfirmationDialog from './modals/ConfirmationModal';
 import { useState } from 'react';
+import chapters from '../data/training.json';
 
 export default function MainMenu(store: UserState) {
   const [confirm, setConfirmation] = useState(false);
@@ -73,7 +74,7 @@ export default function MainMenu(store: UserState) {
             Hallo {user.displayName}
           </Typography>
           <Typography variant="h6" component="h1" gutterBottom>
-            Kapitel abgeschlossen: {chapterFinished}/15
+            Kapitel abgeschlossen: {chapterFinished}/{chapters.length}
           </Typography>
           <Typography variant="h6" component="h1" gutterBottom>
           Übungen abgeschlossen: {user.coursesFinishedTotal}

@@ -19,6 +19,7 @@ export default function PromotionDialog({ open, setOpen, text, setAuswahl }) {
 
   const handleClose = () => {
     setAuswahl(selected);
+    setSelected("none");
     setOpen(false);
   };
   

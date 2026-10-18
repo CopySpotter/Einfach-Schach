@@ -28,7 +28,9 @@ export default function ChapterCard({chapter, user}) {
     let completed = false;
     if (Object.keys(user.chapterProgression).includes(chapter.id.toString())) {
         progressionRaw = user.chapterProgression[chapter.id].coursesFinished;
-        progression = user.chapterProgression[chapter.id].coursesFinished*10;
+        progression = chapter.courses.length
+          ? (progressionRaw / chapter.courses.length) * 100
+          : 0;
         completed = user.chapterProgression[chapter.id].completed;
       }
 

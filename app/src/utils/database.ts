@@ -1,9 +1,19 @@
 import fs from 'fs';
-import { Course } from '../interfaces/training';
+import path from 'path';
+import { Chapter } from '../interfaces/training';
 import { User } from '../interfaces/user';
+
+const usersFile = path.join(process.cwd(), 'src', 'data', 'users.json');
+const emptyUsers: User[] = require('../data/users.example.json');
+
 // users in JSON file for simplicity, store in a db for production applications
-let users: User[] = require('../data/users.json');
-const chapters: Course[] = require('../data/training.json');
+// A fresh download deliberately has no users.json yet.  Use the tracked empty
+// template until the first profile is saved, instead of preventing the app
+// from starting.
+let users: User[] = fs.existsSync(usersFile)
+  ? JSON.parse(fs.readFileSync(usersFile, 'utf8'))
+  : [...emptyUsers];
+const chapters: Chapter[] = require('../data/training.json');
 
 export const usersRepo = {
   getAll: () => users,
@@ -18,7 +28,7 @@ export const usersRepo = {
 export const trainingRepo = {
   getAll: () => chapters,
   getById: (id) => chapters.find((x) => x.id.toString() === id.toString()),
-  find: (x): Course => chapters.find(x)
+  find: (x): Chapter => chapters.find(x)
 };
 
 function create(user: User, img: string): User {
@@ -86,8 +96,5 @@ function _delete(id: number) {
 }
 
 function saveData() {
-  fs.writeFileSync(
-    process.cwd() + '/src/data/users.json',
-    JSON.stringify(users, null, 4)
-  );
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 4));
 }

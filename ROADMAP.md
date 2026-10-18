@@ -18,7 +18,6 @@ sind klassische Staunton-Figuren und bleiben erhalten. Der Stand ist bewusst
 noch nicht in `main` übernommen. Die vollständige Freigabe- und
 Grenzdokumentation steht in
 [`docs/RELEASE-v0.1.1-rc.3.md`](docs/RELEASE-v0.1.1-rc.3.md).
-
 Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfonts; die lokale Next.js-Telemetrie ist deaktiviert. Der Datenschutz-Hinweis beschreibt jetzt den tatsächlichen lokalen Datenfluss.
 
 ## Bereits vorhandene Funktionen
@@ -58,7 +57,7 @@ Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfont
 - [x] Login-Zurück-Navigation korrigieren
 - [x] `wantsToClick` vor unbeabsichtigtem Überschreiben durch das nicht mehr vorhandene Formularfeld schützen
 - [ ] Gastmodus und normale Benutzer auf einheitliche Initialwerte bringen
-- [ ] harte Annahmen wie `Kapitel abgeschlossen: x/15` durch Werte aus den Trainingsdaten ersetzen
+- [x] harte Annahmen wie `Kapitel abgeschlossen: x/15` durch Werte aus den Trainingsdaten ersetzen
 - [ ] KI-Sonderfälle wie Patt, Remis und fehlender bester Zug robust behandeln
 - [x] Datenbankzugriffe gegen nicht gefundene Benutzer absichern
 - [ ] direkte DOM-Zugriffe im Schachbrett schrittweise durch React-State/Refs ersetzen
@@ -73,7 +72,32 @@ Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfont
 - [ ] akustische Bedienung verständlicher und konsistenter machen
 - [ ] optional einen besonders reduzierten „Einfach-Modus“ vorsehen
 
-## Arbeitspaket 4 – Technische Modernisierung
+## Arbeitspaket 4 – Adaptive Lernunterstützung: „Gefahrencheck“
+
+Geplant für die Weiterentwicklung nach `v0.1.1-rc.3`: Der einfache
+Computergegner bleibt bewusst erhalten. Zusätzlich soll es eine **optionale,
+lokal arbeitende Analysehilfe** geben. Sie unterstützt beim Lernen, ersetzt
+aber weder die eigene Entscheidung noch den einfachen Gegner.
+
+- [ ] nach Auswahl eines eigenen geplanten Zuges prüfen: „Was wäre die
+  stärkste Antwort des Gegners auf diesen Zug?“
+- [ ] die mögliche Gefahr in einfacher Sprache erklären, zuerst ohne den
+  Lösungszug vorwegzunehmen, z. B. „Danach kann der Gegner deine Dame
+  schlagen“ oder „Achtung: möglicher Springerangriff auf König und Dame“
+- [ ] abgestufte Hilfen anbieten: Denkfrage → Markierung am Brett → konkrete
+  gegnerische Antwort und mögliche Abwehr
+- [ ] die Nutzung vollständig freiwillig machen; keine dauernden Bewertungen,
+  kein Elo und keine automatische Zugausführung
+- [ ] Analyse lokal und offline in einem Web Worker ausführen, damit die
+  Bedienung flüssig bleibt und keine Stellung nach außen übertragen wird
+- [ ] vor einer Einbindung einer echten Engine die Lizenz und die Anforderungen
+  für den Quellcode-/Lizenzhinweis verbindlich klären und dokumentieren
+
+Pädagogisches Ziel: Die Person entscheidet und versucht zuerst selbst. Die
+Hilfe wird nur auf Wunsch und stufenweise eingeblendet. Das entspricht
+Scaffolding, Selbstbestimmung und dem Prinzip, zu fordern, ohne zu überfordern.
+
+## Arbeitspaket 5 – Technische Modernisierung
 
 Erst nach stabiler Bestandsaufnahme.
 

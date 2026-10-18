@@ -23,7 +23,6 @@ Getestet unter Windows 10/11 mit PowerShell und Node.js 18.
 ```powershell
 git clone https://github.com/CopySpotter/Einfach-Schach.git
 cd Einfach-Schach\app
-Copy-Item .\src\data\users.example.json .\src\data\users.json
 npm.cmd install --legacy-peer-deps
 npm.cmd run dev
 ```
@@ -48,7 +47,6 @@ Getestet mit Node.js 18.
 ```bash
 git clone https://github.com/CopySpotter/Einfach-Schach.git
 cd Einfach-Schach/app
-cp src/data/users.example.json src/data/users.json
 npm install --legacy-peer-deps
 npm run dev
 ```
@@ -68,7 +66,9 @@ npm run start
 
 Die Datei `app/src/data/users.json` wird absichtlich nicht im Repository versioniert, weil die Anwendung dort lokale Benutzerdaten speichert.
 
-`users.example.json` enthält eine leere Ausgangsdatei und wird beim ersten lokalen Start nach `users.json` kopiert.
+`users.example.json` enthält eine leere Ausgangsdatei. Bei einer frischen
+Installation startet die Anwendung damit automatisch. Erst wenn ein Profil
+gespeichert wird, entsteht die lokale Datei `users.json`.
 
 ## Technische Hinweise
 

@@ -33,6 +33,10 @@ Browser-Dienste geladen werden.
    Webfonts von außen.
 5. Ein Gastspiel wird nicht als eigenes Profil in `users.json` gespeichert.
 
+Bei einer frischen Installation fehlt diese Datei zunächst absichtlich. Die
+App verwendet dann die mitgelieferte leere Vorlage und startet trotzdem. Erst
+beim Speichern eines Profils wird `users.json` automatisch angelegt.
+
 Die Datei `users.json` liegt auf dem Rechner der Person, die die Anwendung
 startet. Wer Zugriff auf diesen Rechner und diese Datei hat, kann die dort
 gespeicherten Profildaten lesen. Einen eigenen Löschknopf für Profile gibt es
@@ -53,6 +57,16 @@ Login-Schaltfläche erreichbar. Sie wird beim normalen Spiel daher nicht
 gestartet. Falls sie später wieder aktiviert wird, braucht sie vorab eine
 eigene technische und datenschutzrechtliche Prüfung.
 
+## Ergänzende Stabilitätskorrekturen
+
+Die Holzbrett-Optik, PGN-Download, Brettdrehung und Schwarz-Partie bleiben
+unverändert. Neu startet eine frische Installation ohne manuell angelegte
+`users.json`; die Datei entsteht erst beim ersten Speichern eines Profils.
+Die Trainingsanzeige verwendet die tatsächlichen Kapitel- und Übungszahlen.
+Trainings-Bauernumwandlungen prüfen die gewählte Figur. Wiederholte Kapitel
+bleiben Wiederholungen und erhöhen den gespeicherten Fortschritt nicht.
+Zufallsaufgaben werden aus einer Kopie der Trainingsdaten gemischt.
+
 ## Datenschutzhinweis
 
 Die Seite `/legal/privacy` ist jetzt ein technischer Hinweis für diese lokale
@@ -64,6 +78,8 @@ tatsächlich eingesetzte Dienste und ein Impressum passend ergänzt werden.
 
 - `npm run type-check` erfolgreich;
 - `npm run build` erfolgreich;
+- `npm ci --legacy-peer-deps` erfolgreich mit der versionierten
+  `package-lock.json`;
 - die gebaute Datenschutzseite enthält weder das alte Analyse-Skript noch
   Google-Font-Links;
 - die Build-Ausgabe bestätigt das Laden von `app/.env`; die frühere

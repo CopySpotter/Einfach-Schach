@@ -34,6 +34,11 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   const [promo, setPromo] = useState(false);
   const [variation, setVariation] = useState(-1);
   const [auswahl, setAuswahl] = useState('none');
+  const [pendingPromotion, setPendingPromotion] = useState<{
+    from: string;
+    to: string;
+    variationIndex: number;
+  } | null>(null);
   const [chess, setChess] = useState(new Chess());
   const [currentLegal, setCurrentLegal] = useState(0);
   const user = useStore((state) => state.loggedInUser);
@@ -72,19 +77,42 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
         color: toColor(chess),
         dests: toDests(chess),
         events: {
-          after: trainPlay(api, chess, user.animationSpeed, false)
+          after: trainPlay(api, chess, user.animationSpeed)
         }
       }
     });
   }, [api, config]);
 
-  function trainPlay(cg: Api, chess: Chess, delay: number, firstMove: boolean) {
+  useEffect(() => {
+    if (!pendingPromotion || auswahl === 'none' || !api) return;
+
+    const expectedMove = legalMoves[pendingPromotion.variationIndex][currentLegal];
+    if (auswahl !== expectedMove.charAt(4)) {
+      setModal(true);
+      setCG(api, chess, true);
+    } else {
+      playCorrectMove(
+        api,
+        chess,
+        user.animationSpeed,
+        pendingPromotion.variationIndex,
+        pendingPromotion.from,
+        pendingPromotion.to,
+        auswahl
+      );
+    }
+
+    setAuswahl('none');
+    setPendingPromotion(null);
+  }, [auswahl, pendingPromotion, api]);
+
+  function trainPlay(cg: Api, chess: Chess, delay: number) {
     return (orig, dest) => {
       let cou = 0;
       let found = false;
       if (variation === -1) {
         for (const vare of legalMoves) {
-          if (vare[0] === orig + dest) {
+          if (vare[0].slice(0, 4) === orig + dest) {
             setVariation(cou);
             found = true;
             break;
@@ -98,26 +126,15 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
       }
 
       if (found || variation != -1) {
-        if (orig + dest === legalMoves[variation === -1 ? cou : variation][currentLegal]) {
+        const variationIndex = variation === -1 ? cou : variation;
+        const expectedMove = legalMoves[variationIndex][currentLegal];
+        if (orig + dest === expectedMove.slice(0, 4)) {
           const destFigure = chess.get(orig);
           if (dest[1] === '8' && destFigure.color === 'w' && destFigure.type === 'p') {
             setPromo(true);
-          } else if (currentLegal + 1 >= legalMoves[variation === -1 ? cou : variation].length) {
-            setWin(true);
-            updateUserProgression();
-            setCG(cg, chess, false);
-            cg.destroy();
+            setPendingPromotion({ from: orig, to: dest, variationIndex });
           } else {
-            chess.move({ from: orig, to: dest });
-            const nextFrom = legalMoves[variation === -1 ? cou : variation][currentLegal + 1].slice(0, 2);
-            const nextTo = legalMoves[variation === -1 ? cou : variation][currentLegal + 1].slice(2, 4);
-            chess.move({ from: nextFrom, to: nextTo });
-            setTimeout(() => {
-              //@ts-ignore
-              cg.move(nextFrom, nextTo);
-              setCG(cg, chess, true);
-              increaseLegal();
-            }, delay);
+            playCorrectMove(cg, chess, delay, variationIndex, orig, dest);
           }
         } else {
           setModal(true);
@@ -127,29 +144,75 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
     };
   }
 
+  function playCorrectMove(
+    cg: Api,
+    chess: Chess,
+    delay: number,
+    variationIndex: number,
+    from: string,
+    to: string,
+    promotion?: string
+  ) {
+    const moves = legalMoves[variationIndex];
+    chess.move(promotion ? { from, to, promotion } : { from, to });
+
+    if (currentLegal + 1 >= moves.length) {
+      setWin(true);
+      updateUserProgression();
+      setCG(cg, chess, false);
+      cg.destroy();
+      return;
+    }
+
+    const nextFrom = moves[currentLegal + 1].slice(0, 2);
+    const nextTo = moves[currentLegal + 1].slice(2, 4);
+    chess.move({ from: nextFrom, to: nextTo });
+    setTimeout(() => {
+      //@ts-ignore
+      cg.move(nextFrom, nextTo);
+      setCG(cg, chess, true);
+      increaseLegal();
+    }, delay);
+  }
+
   function updateUserProgression() {
-    if (Object.keys(user.chapterProgression).includes(chapter.id.toString())) {
-      user.chapterProgression[chapter.id].coursesFinished =
-        typeof user.chapterProgression[chapter.id] != 'undefined' && typeof user.chapterProgression[chapter.id].completed
-          ? user.chapterProgression[chapter.id].coursesFinished + 1
-          : user.chapterProgression[chapter.id].coursesFinished;
-    } else {
-      user.chapterProgression[chapter.id] = {
-        completed: false,
-        coursesFinished: 1
-      };
+    const previousProgress = user.chapterProgression[chapter.id];
+
+    // Repeating a completed chapter is useful practice, but must not add
+    // phantom exercises to the saved progress counter.
+    if (previousProgress?.completed) {
+      resetExerciseState();
+      return;
     }
-    if (user.chapterProgression[chapter.id].coursesFinished == chapter.courses.length) {
-      user.chapterProgression[chapter.id].completed = true;
-    }
-    user.coursesFinishedTotal += 1;
+
+    const coursesFinished = Math.min(
+      (previousProgress?.coursesFinished || 0) + 1,
+      chapter.courses.length
+    );
+    const nextUser = {
+      ...user,
+      chapterProgression: {
+        ...user.chapterProgression,
+        [chapter.id]: {
+          completed: coursesFinished === chapter.courses.length,
+          coursesFinished
+        }
+      },
+      coursesFinishedTotal: user.coursesFinishedTotal + 1
+    };
+
     if (user.id != 999999) {
-      fetchWrapper.post('/api/users/update', { ...user });
+      fetchWrapper.post('/api/users/update', { ...nextUser });
     }
-    setUser(user);
+    setUser(nextUser);
+    resetExerciseState();
+  }
+
+  function resetExerciseState() {
     setChess(new Chess());
     setCurrentLegal(0);
     setVariation(-1);
+    setPendingPromotion(null);
   }
 
   function increaseLegal() {
@@ -157,15 +220,14 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   }
 
   function skipCourse() {
-    setChess(new Chess());
-    setCurrentLegal(0);
+    resetExerciseState();
     setSelectedCourse(index+1);
     setCG(api, chess, false);
-    setVariation(-1);
   }
 
   function setCG(cg: Api, chess: Chess, highlight: boolean = true) {
     cg.set({
+      fen: chess.fen(),
       turnColor: toColor(chess),
       movable: {
         color: toColor(chess),
@@ -177,6 +239,14 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
       }
     });
   }
+
+  const isRepeatingCompletedChapter =
+    typeof user.chapterProgression[chapter.id] != 'undefined' &&
+    user.chapterProgression[chapter.id].completed;
+
+  const exerciseCount = isRepeatingCompletedChapter
+    ? Math.min(10, chapter.courses.length)
+    : chapter.courses.length;
 
   return (
     <>
@@ -222,13 +292,10 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
 
       <div style={{ height: width, width: width }}>
         <ProgressBar
-          column={
-            typeof user.chapterProgression[chapter.id] != 'undefined' && user.chapterProgression[chapter.id].completed
-              ? 10
-              : chapter.courses.length
-          }
+          column={exerciseCount}
           progress={
-            typeof user.chapterProgression[chapter.id] != 'undefined' && !user.chapterProgression[chapter.id].completed
+            !isRepeatingCompletedChapter &&
+            typeof user.chapterProgression[chapter.id] != 'undefined'
               ? user.chapterProgression[chapter.id].coursesFinished
               : index - 1
           }
