@@ -44,6 +44,10 @@ export default function TrainPage() {
 
   if (selectedChapter != 0) {
     const chapt : Chapter = chapters[selectedChapter-1];
+    // Some imported chapter names contain umlauts as a letter plus a separate
+    // accent.  The image files use the normal single-character spelling.
+    // Normalizing here makes both spellings point to the same logo file.
+    const trainingImage = `/training/${chapt.name.normalize('NFC')}.png`;
     return (
       <>
       <BackButton {...{
@@ -68,7 +72,7 @@ export default function TrainPage() {
             {chapt.subtext}
           </Typography>
           <Image
-                src={'/training/'+chapt.name+'.png'}
+                src={trainingImage}
                 alt="Logo der App (abgebildet: Springer und Turm)"//"logo by ben "
                 width="400px"
                 height="400px"
