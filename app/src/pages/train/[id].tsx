@@ -37,7 +37,11 @@ function buildBoards(chapter:Chapter,size, setSelectedCourse, completed): Record
       prop.width = size.height * 0.85;
       };
     
-    chapterChooser[index+1] = <TrainPlay {...prop}/>;
+    // A new exercise needs a fresh Chessground instance.  Without a key React
+    // can retain the previous board state when the selected course changes.
+    chapterChooser[index+1] = (
+      <TrainPlay key={`${chapter.id}-${course.id}`} {...prop} />
+    );
   });
 
   return chapterChooser;

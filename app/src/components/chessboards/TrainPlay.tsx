@@ -39,7 +39,10 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
     to: string;
     variationIndex: number;
   } | null>(null);
-  const [chess, setChess] = useState(new Chess());
+  // The exercise position must exist before Chessground is created.  Starting
+  // with an empty Chess instance briefly exposed the normal opening position
+  // and its move targets, which could leave an exercise board unresponsive.
+  const [chess, setChess] = useState(() => new Chess(course.start));
   const [currentLegal, setCurrentLegal] = useState(0);
   const user = useStore((state) => state.loggedInUser);
   const setUser = useStore((state) => state.setLoggedInState);
@@ -47,6 +50,7 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   const ref = useRef<HTMLDivElement>(null);
   config = {
     ...config,
+    fen: chess.fen(),
     movable: {
       color: 'white',
       free: false,
@@ -69,10 +73,9 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   }, [ref]);
 
   useEffect(() => {
-    if (chess.history().length === 0) chess.load(course.start);
     api?.set({
       ...config,
-      fen: chess.history().length === 0 ? course.start : chess.fen(),
+      fen: chess.fen(),
       movable: {
         color: toColor(chess),
         dests: toDests(chess),
@@ -209,7 +212,7 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   }
 
   function resetExerciseState() {
-    setChess(new Chess());
+    setChess(new Chess(course.start));
     setCurrentLegal(0);
     setVariation(-1);
     setPendingPromotion(null);
