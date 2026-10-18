@@ -47,13 +47,19 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
   const [currentLegal, setCurrentLegal] = useState(0);
   const user = useStore((state) => state.loggedInUser);
   const setUser = useStore((state) => state.setLoggedInState);
+  const sideToMove = toColor(chess);
 
   const ref = useRef<HTMLDivElement>(null);
   config = {
     ...config,
     fen: chess.fen(),
+    // Chessground does not derive its active side from the FEN.  Without
+    // these two settings, exercises that start with Black to move look right
+    // but cannot be played because Chessground still expects White.
+    orientation: sideToMove,
+    turnColor: sideToMove,
     movable: {
-      color: 'white',
+      color: sideToMove,
       free: false,
       dests: toDests(chess)
     },
