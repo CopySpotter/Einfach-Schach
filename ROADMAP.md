@@ -72,6 +72,9 @@ wiederholen kann.
 - [ ] bereits gelöste Teilaufgaben und abgeschlossene Kapitel auf Wunsch
   wiederholen lassen, ohne den ursprünglichen Fortschritt oder die Zahl der
   gelösten Übungen erneut zu erhöhen
+- [ ] nach einer richtigen Lösung die Stellung sichtbar stehen lassen und
+  zwei gleichwertige, klar beschriftete Möglichkeiten anbieten:
+  `Noch einmal` und `Nächste Übung`; kein automatischer Rücksprung
 - [ ] Rückkehr, Neuladen, Gastmodus, registriertes Profil und Wiederholung
   jeweils praktisch im Browser testen
 
@@ -91,7 +94,9 @@ wiederholen kann.
 
 - [ ] Bedienablauf mit möglichst wenigen Entscheidungen pro Bildschirm prüfen
 - [ ] Schriftgrößen, Kontraste und Touch-Ziele prüfen
-- [ ] Tastaturbedienung systematisch testen
+- [ ] Tastaturbedienung systematisch testen: mit Tab, Umschalt+Tab, Enter und
+  Escape müssen Brett, Hinweise, Dialoge und alle wichtigen Buttons erreichbar
+  und sinnvoll bedienbar sein
 - [ ] Screenreader-Texte und Fokusführung prüfen
 - [ ] akustische Bedienung verständlicher und konsistenter machen
 - [ ] optional einen besonders reduzierten „Einfach-Modus“ vorsehen
