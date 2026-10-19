@@ -51,6 +51,30 @@ Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfont
 - [ ] Einstellungen nach Neustart prüfen
 - [ ] Blindenmodus und Audios getrennt testen
 
+## Geplante Ausbaustufe – Verlässliche Lernwege und Fortschritt
+
+Nach dem vollständigen Funktionstest wird der Trainingsablauf so gestaltet,
+dass eine Person jederzeit klar zurückkehren, später fortsetzen oder bewusst
+wiederholen kann.
+
+- [ ] „Zurück“ nur für eine Ebene im Ablauf verwenden; eindeutige Ziele mit
+  verständlichen Texten benennen, etwa `Zum Hauptmenü` und
+  `Zur Übungsübersicht`
+- [ ] nach jeder richtig gelösten Teilaufgabe einen Zwischenstand speichern,
+  nicht erst nach Abschluss eines ganzen Kapitels
+- [ ] beim Gast den Zwischenstand nur in der aktuellen Browser-Sitzung
+  behalten; beim Abmelden wird er gelöscht
+- [ ] bei einem registrierten Profil den Zwischenstand in der lokalen
+  `users.json` speichern, damit er auch nach Browser- oder Programmneustart
+  erhalten bleibt
+- [ ] beim erneuten Öffnen eines Kapitels automatisch die nächste noch offene
+  Teilaufgabe anbieten
+- [ ] bereits gelöste Teilaufgaben und abgeschlossene Kapitel auf Wunsch
+  wiederholen lassen, ohne den ursprünglichen Fortschritt oder die Zahl der
+  gelösten Übungen erneut zu erhöhen
+- [ ] Rückkehr, Neuladen, Gastmodus, registriertes Profil und Wiederholung
+  jeweils praktisch im Browser testen
+
 ## Arbeitspaket 2 – Offensichtliche Altlasten
 
 - [ ] veraltete oder ungenutzte Imports und Debug-Ausgaben entfernen
