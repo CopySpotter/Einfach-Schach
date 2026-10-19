@@ -90,6 +90,25 @@ tatsächlich eingesetzte Dienste und ein Impressum passend ergänzt werden.
 Bekannte Warnungen älterer Abhängigkeiten, insbesondere Chessground, sind
 weiter vorhanden. Sie sind in diesem Release keine Build-Fehler.
 
+## Nachträglicher Qualitäts- und Testhinweis (19. Oktober 2026)
+
+Der Tag `v0.1.1-rc.3` und die dazugehörige ZIP-Datei bleiben unverändert.
+Nach seinem Erscheinen wurde das Training im Browser weiter systematisch
+durchgetestet. Dabei zeigte sich erneut der Unterschied zwischen technischem
+Build-Test und echter Bedienprüfung.
+
+Gefundene Sonderfälle waren unterschiedlich gespeicherte Umlaute zwischen
+Kapitelnamen und Bilddateien, nicht sofort übernommene Trainingsstellungen,
+Gastfortschritt nur im Arbeitsspeicher und Aufgaben, die mit Schwarz beginnen.
+Bei Chessground reicht die Stellung aus der FEN-Zeile nicht aus: Die aktive
+Zugfarbe muss zusätzlich gesetzt werden. Sonst sieht das Brett richtig aus,
+nimmt den schwarzen Zug aber nicht an.
+
+Diese Befunde sind im weitergeführten Branch `feature/pgn-export` gezielt
+korrigiert worden. Für künftige Änderungen gilt: Neben `npm run type-check`
+und `npm run build` wird jedes geänderte Kapitel im Browser mit den
+tatsächlichen Bedienwegen geprüft.
+
 ## Bekannte Grenzen
 
 1. **Spielerfarbe ist noch nicht dauerhaft gespeichert.** Eine als Schwarz
