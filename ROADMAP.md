@@ -141,6 +141,22 @@ Pädagogisches Ziel: Die Person entscheidet und versucht zuerst selbst. Die
 Hilfe wird nur auf Wunsch und stufenweise eingeblendet. Das entspricht
 Scaffolding, Selbstbestimmung und dem Prinzip, zu fordern, ohne zu überfordern.
 
+### Zusatzfeature – Freiwillige Analyse bei Lichess
+
+Wenn eine Aufgabe zu schwer ist, soll ein klar beschrifteter Button wie
+`Stellung in Lichess analysieren` angeboten werden. Er öffnet in einem neuen
+Browser-Tab die aktuelle Stellung als FEN-Link in der Lichess-Analyse. Dort
+kann die Person die Analyse-Engine und Varianten selbst verwenden.
+
+- [ ] FEN der gerade geöffneten Partie oder Trainingsaufgabe in eine
+  Lichess-Analyse-URL umwandeln und in einem neuen Tab öffnen
+- [ ] ausschließlich freiwillig anbieten; keine automatische Bewertung und
+  keine Übernahme eines Lichess-Zuges in Einfach-Schach
+- [ ] den Button deutlich als externe Internetseite kennzeichnen und erklären,
+  dass dafür eine Internetverbindung nötig ist und die Stellung an Lichess
+  übergeben wird
+- [ ] in der lokalen App weiterhin ohne Lichess spielbar und lernbar bleiben
+
 ## Arbeitspaket 5 – Technische Modernisierung
 
 Erst nach stabiler Bestandsaufnahme.
