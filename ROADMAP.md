@@ -72,6 +72,26 @@ Zusätzlich entfernt `v0.1.1-rc.3` den fremden Analyse-Dienst und Google-Webfont
 - [ ] akustische Bedienung verständlicher und konsistenter machen
 - [ ] optional einen besonders reduzierten „Einfach-Modus“ vorsehen
 
+## Geplante Ausbaustufe – Dezente und zugängliche Schachklänge
+
+Erst nach dem vollständigen Funktionstest wird die bisherige Tonkulisse
+überarbeitet. Die vorhandenen Dateien sind für häufige Schachzüge zu lang und
+haben im Projekt keine dokumentierte Herkunft oder Lizenz.
+
+- [ ] vorhandene Zug-, Signal- und Figurenklänge vollständig ersetzen oder
+  bewusst entfernen; keine fremden Lichess- oder Chess.com-Sounds übernehmen
+- [ ] nur lokal mitgelieferte, klar dokumentierte und verwendbare Quellen
+  einsetzen; bevorzugt CC0, mit `CREDITS`-Datei für jede Datei
+- [ ] ein kurzes dezentes Set für Zug, Schlagzug, Schach, Matt, Gewinn und
+  Niederlage zusammenstellen; ein normaler Zug soll nur einen sehr kurzen
+  Rückmeldeton auslösen
+- [ ] Figurenansagen als eigene, freiwillige Zugänglichkeitsfunktion erhalten,
+  aber von Brettgeräuschen trennen
+- [ ] Einstellungen anbieten: `Aus`, `Dezent` und `Figurenansagen`; jede
+  Auswahl soll direkt mit einer Hörprobe getestet werden können
+- [ ] Lautstärke und Verständlichkeit mit Kopfhörern, Laptop-Lautsprechern und
+  im Blindenmodus praktisch prüfen
+
 ## Arbeitspaket 4 – Adaptive Lernunterstützung: „Gefahrencheck“
 
 Geplant für die Weiterentwicklung nach `v0.1.1-rc.3`: Der einfache
