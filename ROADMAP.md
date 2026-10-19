@@ -157,6 +157,24 @@ kann die Person die Analyse-Engine und Varianten selbst verwenden.
   übergeben wird
 - [ ] in der lokalen App weiterhin ohne Lichess spielbar und lernbar bleiben
 
+### Zusatzfeature – Lösung langsam wiederholen und erklären
+
+Nach einer erfolgreich gelösten Aufgabe soll die Person auf Wunsch die
+richtige Zugfolge noch einmal in Ruhe sehen können. Das ist keine Bewertung,
+sondern eine Wiederholung des gerade erreichten Lösungswegs.
+
+- [ ] nach dem Erfolg einen Button wie `Lösung langsam ansehen` anbieten
+- [ ] die gespeicherte Lösungsvariante Zug für Zug abspielen; Start, Pause,
+  Zurück und Weiter müssen möglich sein
+- [ ] den gerade ausgeführten Zug sowie Ausgangs- und Zielfeld gut sichtbar
+  hervorheben; keine schnellen oder ablenkenden Effekte
+- [ ] bei Bedarf einfache kurze Erläuterungen einblenden, etwa „Die Dame
+  greift den Turm an“ oder „Der König muss ausweichen“
+- [ ] Wiederholung rein freiwillig halten und den bereits erreichten
+  Fortschritt nicht verändern
+- [ ] langsame Wiedergabe mit den Einstellungen für Animation, Ton und
+  Blindenmodus abstimmen und praktisch testen
+
 ## Arbeitspaket 5 – Technische Modernisierung
 
 Erst nach stabiler Bestandsaufnahme.
