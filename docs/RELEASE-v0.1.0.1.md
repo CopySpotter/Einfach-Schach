@@ -31,3 +31,22 @@ npm run dev
 ```
 
 Danach im Browser `http://localhost:3000` öffnen.
+
+## Nachträglicher Qualitäts- und Testhinweis (19. Oktober 2026)
+
+Dieser Hinweis wurde nach der Veröffentlichung ergänzt. Der Tag `v0.1.0.1`
+und die zugehörige ZIP-Datei bleiben unverändert. Diese Version ist ein
+stabiler Korrektur-Release für Datenschutz und lokalen Betrieb, aber kein
+vollständiger, kapitelweiser Trainingstest.
+
+Ein TypeScript-Check und ein Produktions-Build prüfen, ob das Programm
+technisch gebaut werden kann. Sie prüfen nicht jede Bedienhandlung im Browser.
+Beim späteren Durchtesten wurden kleine Sonderfälle gefunden: Umlaute können
+in Kapitelname und Bilddatei technisch unterschiedlich gespeichert sein;
+einige Trainingsaufgaben beginnen mit Schwarz; außerdem müssen
+Trainingsstellung, Brettanzeige und React-Zustand gemeinsam geprüft werden.
+
+Für diese Version gilt daher: Die Kernwege waren getestet, eine vollständige
+manuelle Regression aller Trainingsaufgaben war damals noch offen. Spätere
+Vorabversionen beheben solche Befunde gezielt, ohne den historischen Release
+nachträglich umzuschreiben.
