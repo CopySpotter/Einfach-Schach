@@ -83,6 +83,25 @@ Stand: `develop`, 10. September 2026
 - Rochade, Umwandlung, Matt, Patt, Remis, Aufgabe und Rücknahme
 - Audio- und Blindenmodus mit Tastatur/Screenreader
 
+## Nachträglicher Qualitäts- und Testhinweis (19. Oktober 2026)
+
+Dieser Hinweis wurde nach der Veröffentlichung ergänzt. Der Tag `v0.1.0`
+und die zugehörige ZIP-Datei bleiben unverändert: Sie sind der historische
+Ausgangsstand.
+
+`npm run type-check` und `npm run build` zeigen, dass der Code übersetzt und
+gebaut werden kann. Sie ersetzen aber kein Durchspielen der sichtbaren
+Bedienabläufe. Beim späteren systematischen Testen der Trainingskapitel wurden
+kleine Sonderfälle gefunden, die in diesem historischen Stand noch nicht
+vollständig abgesichert waren: unterschiedlich gespeicherte Umlaute in
+Kapitelname und Bilddatei, Aufgaben mit Schwarz am Zug sowie das
+Zusammenspiel von Trainingsstellung, Brettanzeige und React-Zustand.
+
+Der Stand `v0.1.0` ist damit eine nutzbare historische Basis, aber keine
+Bestätigung, dass jede Trainingsaufgabe und jeder seltene Bedienweg manuell
+getestet wurde. Künftige Änderungen sollen deshalb neben Build und
+TypeScript-Check immer auch gezielt im Browser geprüft werden.
+
 ## Vollständige HTML-Dokumentation
 
 Siehe `docs/Einfach-Schach_Gesamtdokumentation.html` für Feature-Matrix, Architektur, Benutzerabläufe, Datenflüsse, Funktionsreferenz, Routen, Status und Arbeitsplan.
