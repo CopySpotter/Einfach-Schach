@@ -2,6 +2,7 @@ import { Box, Button, Typography, Card, CardContent, CardActionArea, Collapse, G
 import LinearProgressWithLabel from '../progress/LinearProgress';
 import { useState } from 'react';
 import Link from 'next/link';
+import { isChapterCompleted } from '../../utils/helper';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -31,7 +32,7 @@ export default function ChapterCard({chapter, user}) {
         progression = chapter.courses.length
           ? (progressionRaw / chapter.courses.length) * 100
           : 0;
-        completed = user.chapterProgression[chapter.id].completed;
+        completed = isChapterCompleted(user, chapter);
       }
 
     if (progression > 100) {progression = 100};
