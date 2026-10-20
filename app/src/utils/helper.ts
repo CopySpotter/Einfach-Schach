@@ -75,6 +75,16 @@ export function getCourse(user:User, chapterId:any){
   return state;
 }
 
+/**
+ * A chapter is complete only when the saved number of solved exercises still
+ * matches the chapter's current contents. This lets an existing profile
+ * continue normally when new exercises are added to a completed chapter.
+ */
+export function isChapterCompleted(user: User, chapter: Chapter): boolean {
+  const progression = user.chapterProgression[chapter.id];
+  return !!progression && progression.coursesFinished >= chapter.courses.length;
+}
+
 
 export function toDests(chess: Chess): Map<Key, Key[]> {
   const dests = new Map();
@@ -94,7 +104,7 @@ export function toGermanColor(turn: string): string {
 }
 
 export function getColorForChapterChooser(user: User,chapter: Chapter): string {
-  return user.chapterProgression[chapter.id].completed ? "#287233" : '#575757';
+  return isChapterCompleted(user, chapter) ? "#287233" : '#575757';
 }
 
 export function playOtherSide(cg: Api, chess) {
