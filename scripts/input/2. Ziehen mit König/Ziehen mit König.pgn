@@ -28,3 +28,15 @@
 
 {[#]} 1. Kc4 (1. Kd4) (1. Ke4) (1. Ke3) (1. Ke2) (1. Kd2) (1. Kc2) (1. Kc3) *
 
+[Event "Ziehen mit König – Schwarz"]
+[Site "?"]
+[Date "2026.10.20"]
+[Round "?"]
+[White "?"]
+[Black "3"]
+[Result "*"]
+[SetUp "1"]
+[FEN "8/8/3k4/8/3K4/8/8/8 b - - 0 1"]
+
+1... Kc6 (1... Ke6) (1... Ke7) (1... Kd7) (1... Kc7) *
+
