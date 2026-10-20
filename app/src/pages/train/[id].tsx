@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useWindowSize, getMultipleRandomCourses, getCourse } from '../../utils/helper';
+import { useWindowSize, getMultipleRandomCourses, getCourse, isChapterCompleted } from '../../utils/helper';
 import { Container, Box, CircularProgress, Button, Divider, Typography } from '@mui/material';
 import TrainPlay from '../../components/chessboards/TrainPlay';
 import axios from 'axios';
@@ -13,6 +13,7 @@ import Image from 'next/image';
 
 import success from '../../../public/success.png';
 import LongPressButton from '../../components/buttons/LongPressButton';
+import chapterDefinitions from '../../data/training.json';
 
 function buildBoards(chapter:Chapter,size, setSelectedCourse, completed): Record<number,any> {
   let chapterChooser: Record<number,any> = {0:null};
@@ -58,10 +59,12 @@ function TrainIdPage() {
 
   id = id ? id.toString() : '1';
 
-  const [selectedCourse,setSelectedCourse] = 
-    (typeof loggedUser.chapterProgression[parseInt(id.toString())] != 'undefined' &&
-     loggedUser.chapterProgression[parseInt(id.toString())].completed ? 
-     useState(1) : useState(getCourse(loggedUser, id)));
+  const localChapter = chapterDefinitions.find((chapter) => chapter.id === parseInt(id.toString()));
+  const hasCompletedCurrentChapter = !!localChapter && isChapterCompleted(loggedUser, localChapter);
+
+  const [selectedCourse,setSelectedCourse] = useState(
+    hasCompletedCurrentChapter ? 1 : getCourse(loggedUser, id)
+  );
 
   const { data: data } = useSWR(
     ['/api/training/all'],
@@ -100,8 +103,12 @@ function TrainIdPage() {
       </Container>
     );
   }
-  const renderedBoards = buildBoards(data.chapter,size,setSelectedCourse,
-    (typeof loggedUser.chapterProgression[parseInt(id.toString())] != 'undefined' && loggedUser.chapterProgression[parseInt(id.toString())].completed ?  true : false));
+  const renderedBoards = buildBoards(
+    data.chapter,
+    size,
+    setSelectedCourse,
+    isChapterCompleted(loggedUser, data.chapter)
+  );
   
   if (selectedCourse>=Object.keys(renderedBoards).length) {
 
