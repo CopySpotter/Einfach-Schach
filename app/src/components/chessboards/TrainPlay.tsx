@@ -8,7 +8,7 @@ import SuccessTrainingDialog from '../modals/SuccessTrainingModal';
 import { Config } from 'chessground/config';
 import { Chapter, Course } from '../../interfaces/training';
 import { Api } from 'chessground/api';
-import { toColor, toDests, toGermanColor } from '../../utils/helper';
+import { isChapterCompleted, toColor, toDests, toGermanColor } from '../../utils/helper';
 import { Chessground as ChessgroundApi } from 'chessground';
 
 import 'chessground/assets/chessground.base.css';
@@ -190,7 +190,7 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
 
     // Repeating a completed chapter is useful practice, but must not add
     // phantom exercises to the saved progress counter.
-    if (previousProgress?.completed) {
+    if (isChapterCompleted(user, chapter)) {
       resetExerciseState();
       return;
     }
@@ -252,9 +252,7 @@ export default function TrainPlay({ width = 450, config, course, setSelectedCour
     });
   }
 
-  const isRepeatingCompletedChapter =
-    typeof user.chapterProgression[chapter.id] != 'undefined' &&
-    user.chapterProgression[chapter.id].completed;
+  const isRepeatingCompletedChapter = isChapterCompleted(user, chapter);
 
   const exerciseCount = isRepeatingCompletedChapter
     ? Math.min(10, chapter.courses.length)
